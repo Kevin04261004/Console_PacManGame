@@ -34,7 +34,6 @@ void CKPlayer::InitializeSprites()
 		std::cerr << "Error loading PacmanDeath texture." << std::endl;
 	}
 	m_sprite.setTexture(m_textureNormal);  // 초기 스프라이트 텍스처 설정
-	m_sprite.setOrigin(CellInfo::CELL_SIZE / 2, CellInfo::CELL_SIZE / 2);
 	Reset();
 }
 

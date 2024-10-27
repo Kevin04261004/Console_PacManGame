@@ -41,7 +41,7 @@ bool CKMap::LoadMapFromFile(const std::string& filePath)
             case 'o': m_mapData[y][x] = ECellType::Energizer; break;
             case 'P':
                 m_mapData[y][x] = ECellType::Player;
-                m_playerInitPos = sf::Vector2f(CellInfo::CELL_SIZE * x + CellInfo::CELL_SIZE * 0.5f, CellInfo::CELL_SIZE * y + CellInfo::CELL_SIZE * 0.5f);
+                m_playerInitPos = sf::Vector2f(CellInfo::CELL_SIZE * x, CellInfo::CELL_SIZE * y);
                 break;
             case '0': m_mapData[y][x] = ECellType::Enemy; break;
             case '1': m_mapData[y][x] = ECellType::Enemy1; break;
