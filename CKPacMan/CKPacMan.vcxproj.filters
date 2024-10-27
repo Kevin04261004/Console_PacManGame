@@ -13,10 +13,114 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Sounds">
+      <UniqueIdentifier>{6468896b-be42-460f-aab1-83c4fcaa570e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Map">
+      <UniqueIdentifier>{021fa690-f5e4-4fea-b1ab-8caf5b1d1992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{21200ea5-6493-4d75-9636-3a3b9254dc28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CKSoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CKMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CKActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CKCharacter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CKPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sounds\pacman_beginning.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_chomp.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_death.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_eatfruit.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_eatghost.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_intermission.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_ringtone.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\pacman_ringtone_interlude.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CKSoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CKMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CKActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CKCharacter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CKPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CellInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\Maps\CKGameMap.txt">
+      <Filter>Resource Files\Map</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Images\Font.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Resource\Images\Ghost16.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Resource\Images\Map16.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Resource\Images\Pacman16.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Resource\Images\PacmanDeath16.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Resource\Images\Map32.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

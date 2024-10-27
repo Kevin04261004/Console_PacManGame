@@ -19,7 +19,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CKActor.cpp" />
+    <ClCompile Include="CKCharacter.cpp" />
+    <ClCompile Include="CKMap.cpp" />
+    <ClCompile Include="CKPlayer.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="CKSoundManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sounds\pacman_beginning.wav" />
+    <Media Include="Resource\Sounds\pacman_chomp.wav" />
+    <Media Include="Resource\Sounds\pacman_death.wav" />
+    <Media Include="Resource\Sounds\pacman_eatfruit.wav" />
+    <Media Include="Resource\Sounds\pacman_eatghost.wav" />
+    <Media Include="Resource\Sounds\pacman_intermission.wav" />
+    <Media Include="Resource\Sounds\pacman_ringtone.mp3" />
+    <Media Include="Resource\Sounds\pacman_ringtone_interlude.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CellInfo.h" />
+    <ClInclude Include="CKActor.h" />
+    <ClInclude Include="CKCharacter.h" />
+    <ClInclude Include="CKMap.h" />
+    <ClInclude Include="CKPlayer.h" />
+    <ClInclude Include="CKSoundManager.h" />
+    <ClInclude Include="InputEvent.h" />
+    <ClInclude Include="InputHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resource\Maps\CKGameMap.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Images\Font.png" />
+    <Image Include="Resource\Images\Ghost16.png" />
+    <Image Include="Resource\Images\Map16.png" />
+    <Image Include="Resource\Images\Map32.png" />
+    <Image Include="Resource\Images\Pacman16.png" />
+    <Image Include="Resource\Images\PacmanDeath16.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
