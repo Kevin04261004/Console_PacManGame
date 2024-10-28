@@ -3,8 +3,8 @@
 #include <iostream>
 #include "CKMap.h"
 
-CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map) : CKCharacter(map->GetActorPos(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPos(EActorType::Player).y * CellInfo::CELL_SIZE),
-m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map)
+CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map, float moveSpeed) : CKCharacter(map->GetActorPos(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPos(EActorType::Player).y * CellInfo::CELL_SIZE),
+m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
 	InitializeSprites();
 	m_inputHandler = inputHandler;
@@ -60,7 +60,7 @@ void CKPlayer::Update(float deltaTime)
 
 
 	m_moveTimer += deltaTime;
-	if (m_moveTimer > 0.5f)
+	if (m_moveTimer > m_moveSpeed)
 	{
 		sf::Vector2f pos = m_position + m_direction;
 		if (pos.x < 0) {

@@ -3,11 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include "CellInfo.h"
 #include <map>
+#include "SFML/Audio.hpp"
 
 class CKMap
 {
 public:
-    CKMap();
+    CKMap(class CKSoundManager* SoundManager);
 
     // ¸Ê ÆÄÀÏ ÀÐ±â
     bool LoadMapFromFile(const std::string& filename);
@@ -36,5 +37,12 @@ private:
 
 private:
     std::map<EActorType, sf::Vector2f> m_actorPos;
+
+/* Sound */
+private:
+    CKSoundManager* m_soundManager;
+    sf::SoundBuffer m_pellet01SoundBuffer;
+    sf::SoundBuffer m_pellet02SoundBuffer;
+    bool m_pelletTrigger;
 };
 

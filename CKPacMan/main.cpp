@@ -17,7 +17,7 @@ int main()
 
     // 오디오 설정
     sf::SoundBuffer BGMBuffer;
-    if (!BGMBuffer.loadFromFile("Resource/Sounds/pacman_ringtone.mp3"))
+    if (!BGMBuffer.loadFromFile("Resource/Sounds/siren0.wav"))
     {
         return -1;
     }
@@ -25,16 +25,18 @@ int main()
     CKSoundManager soundManager;
     soundManager.PlayBGM(BGMBuffer);
     soundManager.SetBGMVolume(30.0f);
+    soundManager.SetSFXVolume(300.0f);
 
     // 맵 설정
-    CKMap map;
+    CKMap map(&soundManager);
     if (!map.LoadMapFromFile("Resource/Maps/CKGameMap.txt"))
     {
         return -1;
     }
 
     // 플레이어 설정
-    CKPlayer player(&inputHandler, &map);
+    float moveSpeed = 0.2f;
+    CKPlayer player(&inputHandler, &map, moveSpeed);
 
     // 시간 설정
     auto previousTime = std::chrono::high_resolution_clock::now();
