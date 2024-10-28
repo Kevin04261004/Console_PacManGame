@@ -2,26 +2,26 @@
 #include "CellInfo.h"
 #include <iostream>
 
-CKPlayer::CKPlayer(float x, float y, float speed, InputHandler* inputHandler) : CKCharacter(x, y, speed), m_animSpeed(4), m_animTimer(0.0f),
+CKPlayer::CKPlayer(float x, float y, InputHandler* inputHandler) : CKCharacter(x, y), m_animSpeed(0.1f), m_animTimer(0.0f),
 DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0,0))
 {
 	InitializeSprites();
 	m_inputHandler = inputHandler;
 
 	m_inputHandler->onMoveRight.subscribe([this]() {
-		m_direction = sf::Vector2f(1, 0);
+		m_direction = sf::Vector2f(CellInfo::CELL_SIZE, 0);
 		});
 
 	m_inputHandler->onMoveLeft.subscribe([this]() {
-		m_direction = sf::Vector2f(-1, 0);
+		m_direction = sf::Vector2f(-CellInfo::CELL_SIZE, 0);
 		});
 
 	m_inputHandler->onMoveUp.subscribe([this]() {
-		m_direction = sf::Vector2f(0, -1);
+		m_direction = sf::Vector2f(0, -CellInfo::CELL_SIZE);
 		});
 
 	m_inputHandler->onMoveDown.subscribe([this]() {
-		m_direction = sf::Vector2f(0, 1);
+		m_direction = sf::Vector2f(0, CellInfo::CELL_SIZE);
 		});
 }
 
@@ -52,7 +52,13 @@ void CKPlayer::Update(float deltaTime)
 		}
 	}
 
-	m_position += m_direction * m_speed;
+
+	m_moveTimer += deltaTime;
+	if (m_moveTimer > 0.5f)
+	{
+		m_position += m_direction;
+		m_moveTimer = 0.0f;
+	}
 
 	m_sprite.setPosition(m_position.x, m_position.y);
 }
@@ -61,19 +67,19 @@ void CKPlayer::Draw(sf::RenderWindow& window)
 {
 	unsigned char frame = static_cast<unsigned char>(floor(m_animTimer / static_cast<float>(m_animSpeed)));
 	int yPos = 0;
-	if (m_direction == sf::Vector2f(1, 0)) // Right
+	if (m_direction == sf::Vector2f(CellInfo::CELL_SIZE, 0)) // Right
 	{
 		yPos = 0;
 	}
-	else if (m_direction == sf::Vector2f(0, -1)) // Up
+	else if (m_direction == sf::Vector2f(0, -CellInfo::CELL_SIZE)) // Up
 	{
 		yPos = 1;
 	}
-	else if (m_direction == sf::Vector2f(-1, 0)) // Left
+	else if (m_direction == sf::Vector2f(-CellInfo::CELL_SIZE, 0)) // Left
 	{
 		yPos = 2;
 	}
-	else if (m_direction == sf::Vector2f(0, 1)) // Down
+	else if (m_direction == sf::Vector2f(0, CellInfo::CELL_SIZE)) // Down
 	{
 		yPos = 3;
 	}

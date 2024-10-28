@@ -34,9 +34,10 @@ int main()
     }
 
     // 플레이어 설정
-    float PlayerSpeed = 0.02f;
-    CKPlayer player(map.GetPlayerInitPosition().x, map.GetPlayerInitPosition().y, PlayerSpeed, &inputHandler);
+    CKPlayer player(map.GetPlayerInitPosition().x, map.GetPlayerInitPosition().y, &inputHandler);
 
+    // 시간 설정
+    auto previousTime = std::chrono::high_resolution_clock::now();
 
     // 게임 루프
     while (window.isOpen())
@@ -48,11 +49,17 @@ int main()
                 window.close();
         }
 
+        // 시간 설정
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> elapsedTime = currentTime - previousTime;
+        previousTime = currentTime;
+        float deltaTime = elapsedTime.count();
+
         // 입력 처리
         inputHandler.HandleInput();
 
         // 플레이어 업데이트 (DeltaTime 사용)
-        player.Update(0.02f);
+        player.Update(deltaTime);
 
         // 화면 그리기
         window.clear();

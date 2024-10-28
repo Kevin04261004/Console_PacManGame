@@ -65,6 +65,9 @@ void CKMap::InitializeSprites()
 
 void CKMap::Draw(sf::RenderWindow& window)
 {
+    // 콘솔 출력을 위한 문자열 벡터 초기화
+    std::vector<std::string> consoleMap(m_height, std::string(m_width, ' '));
+
     for (unsigned char y = 0; y < m_height; y++)
     {
         for (unsigned char x = 0; x < m_width; x++)
@@ -76,32 +79,65 @@ void CKMap::Draw(sf::RenderWindow& window)
             case ECellType::Gate:
                 m_mapSprite.setTextureRect(sf::IntRect(2 * CellInfo::CELL_SIZE, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE));
                 window.draw(m_mapSprite);
+                consoleMap[y][x] = '='; // 게이트
                 break;
 
             case ECellType::Energizer:
                 m_mapSprite.setTextureRect(sf::IntRect(CellInfo::CELL_SIZE, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE));
                 window.draw(m_mapSprite);
+                consoleMap[y][x] = 'o'; // 에너지 파워업
                 break;
 
             case ECellType::Pellet:
                 m_mapSprite.setTextureRect(sf::IntRect(0, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE));
                 window.draw(m_mapSprite);
+                consoleMap[y][x] = '.'; // 작은 점
                 break;
 
             case ECellType::Wall:
             {
-                bool down = (y < m_height - 1 && m_mapData[y+1][x] == ECellType::Wall);
-                bool up = (y > 0 && m_mapData[y-1][x] == ECellType::Wall);
-                bool left = (x > 0 && m_mapData[y][x-1] == ECellType::Wall);
-                bool right = (x < m_width - 1 && m_mapData[y][x+1] == ECellType::Wall);
-                
+                bool down = (y < m_height - 1 && m_mapData[y + 1][x] == ECellType::Wall);
+                bool up = (y > 0 && m_mapData[y - 1][x] == ECellType::Wall);
+                bool left = (x > 0 && m_mapData[y][x - 1] == ECellType::Wall);
+                bool right = (x < m_width - 1 && m_mapData[y][x + 1] == ECellType::Wall);
+
                 m_mapSprite.setTextureRect(sf::IntRect(CellInfo::CELL_SIZE * (down + 2 * (left + 2 * (right + 2 * up))), 0, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE));
                 window.draw(m_mapSprite);
+                consoleMap[y][x] = '#'; // 벽
             }
+            break;
+
+            case ECellType::Player:
+                consoleMap[y][x] = 'P'; // 플레이어
                 break;
+
+            case ECellType::Enemy:
+                consoleMap[y][x] = '0'; // 적 기본 타입
+                break;
+
+            case ECellType::Enemy1:
+                consoleMap[y][x] = '1'; // 적 타입 1
+                break;
+
+            case ECellType::Enemy2:
+                consoleMap[y][x] = '2'; // 적 타입 2
+                break;
+
+            case ECellType::Enemy3:
+                consoleMap[y][x] = '3'; // 적 타입 3
+                break;
+
             default:
+                consoleMap[y][x] = ' '; // 빈 공간
                 break;
             }
         }
     }
+
+    // 콘솔 출력
+    //system("cls");
+    //for (const auto& line : consoleMap)
+    //{
+    //    std::cout << line << std::endl;
+    //}
 }

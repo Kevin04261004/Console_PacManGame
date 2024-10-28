@@ -1,6 +1,6 @@
 #include "CKCharacter.h"
 
-CKCharacter::CKCharacter(float x, float y, float speed) : CKActor(x, y), m_speed(speed)
+CKCharacter::CKCharacter(float x, float y) : CKActor(x, y)
 {
 	
 }

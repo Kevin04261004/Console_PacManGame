@@ -5,7 +5,7 @@
 class CKPlayer : public CKCharacter
 {
 public:
-	CKPlayer(float x, float y, float speed, InputHandler* inputHandler);
+	CKPlayer(float x, float y, InputHandler* inputHandler);
 	void InitializeSprites() override;
 	void Update(float deltaTime);
 	virtual void Draw(sf::RenderWindow& window) override;
@@ -18,9 +18,10 @@ protected:
 	sf::Texture m_textureNormal;
 	sf::Texture m_textureDeath;
 
-	int m_animSpeed;
+	float m_animSpeed;
 	float m_animTimer;
 	float m_energizerTimer;
+	float m_moveTimer;
 	const int DEATH_FRAMES;
 	const int NORMAL_FRAMES;
 	bool m_animOver;
