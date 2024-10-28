@@ -10,7 +10,3 @@ CKActor::~CKActor()
 {
 }
 
-void CKActor::Draw(sf::RenderWindow& window)
-{
-	window.draw(m_sprite);
-}

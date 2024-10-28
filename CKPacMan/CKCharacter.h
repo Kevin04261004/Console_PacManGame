@@ -8,8 +8,9 @@ public:
 	virtual ~CKCharacter();
 	virtual void Dead();
 protected:
-	virtual void Move(float deltaTime, sf::Vector2f moveDir);
-
+	virtual void Draw(sf::RenderWindow& window) {}
+	virtual void Update(float deltaTime) {}
+	virtual void InitializeSprites() {}
 	bool m_isDead;
 };
 

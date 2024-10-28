@@ -4,8 +4,10 @@
 #include "CKSoundManager.h"
 #include "CKMap.h"
 #include "CKPlayer.h"
+#include "CKEnemy.h"
 #include "InputHandler.h"
 #include <chrono>
+#include <vector>
 
 int main()
 {
@@ -25,7 +27,7 @@ int main()
     CKSoundManager soundManager;
     soundManager.PlayBGM(BGMBuffer);
     soundManager.SetBGMVolume(30.0f);
-    soundManager.SetSFXVolume(300.0f);
+    soundManager.SetSFXVolume(30.0f);
 
     // 맵 설정
     CKMap map(&soundManager);
@@ -34,9 +36,24 @@ int main()
         return -1;
     }
 
+    // Actor에 추가.
+    std::vector<class CKActor*> actors;
+
     // 플레이어 설정
-    float moveSpeed = 0.2f;
+    float moveSpeed = 0.15f;
     CKPlayer player(&inputHandler, &map, moveSpeed);
+    actors.push_back(&player);
+
+    // 몬스터 설정
+    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy0);
+    actors.push_back(&enemy01);
+    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy1);
+    actors.push_back(&enemy02);
+    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy2);
+    actors.push_back(&enemy03);
+    CKEnemy enemy04(&map, moveSpeed, EActorType::Enemy3);
+    actors.push_back(&enemy04);
+
 
     // 시간 설정
     auto previousTime = std::chrono::high_resolution_clock::now();
@@ -61,12 +78,18 @@ int main()
         inputHandler.HandleInput();
 
         // 플레이어 업데이트 (DeltaTime 사용)
-        player.Update(deltaTime);
+        for (auto actor : actors)
+        {
+            actor->Update(deltaTime);
+        }
 
         // 화면 그리기
         window.clear();
         map.Draw(window);
-        player.Draw(window);
+        for (auto actor : actors)
+        {
+            actor->Draw(window);
+        }
         window.display();
     }
 

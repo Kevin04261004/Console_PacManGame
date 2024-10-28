@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="CKActor.cpp" />
     <ClCompile Include="CKCharacter.cpp" />
+    <ClCompile Include="CKEnemy.cpp" />
     <ClCompile Include="CKMap.cpp" />
     <ClCompile Include="CKPlayer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="CellInfo.h" />
     <ClInclude Include="CKActor.h" />
     <ClInclude Include="CKCharacter.h" />
+    <ClInclude Include="CKEnemy.h" />
     <ClInclude Include="CKMap.h" />
     <ClInclude Include="CKPlayer.h" />
     <ClInclude Include="CKSoundManager.h" />

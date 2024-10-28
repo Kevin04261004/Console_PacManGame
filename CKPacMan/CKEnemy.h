@@ -1,11 +1,11 @@
 #pragma once
 #include "CKCharacter.h"
-#include "InputHandler.h"
+#include "CellInfo.h"
 
-class CKPlayer : public CKCharacter
+class CKEnemy : public CKCharacter
 {
 public:
-	CKPlayer(InputHandler* inputHandler, class CKMap* map, float moveSpeed);
+	CKEnemy(class CKMap* map, float moveSpeed, EActorType type);
 	void InitializeSprites() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(sf::RenderWindow& window) override;
@@ -13,11 +13,12 @@ public:
 	void Win();
 	void Reset();
 protected:
-	InputHandler* m_inputHandler;
 	CKMap* m_map;
+	enum class EActorType m_enemyType;
 
-	sf::Texture m_textureNormal;
-	sf::Texture m_textureDeath;
+	sf::Texture m_texture;
+	sf::Sprite m_eyeSprite;
+	sf::Color m_baseColor;
 
 	float m_animSpeed;
 	float m_moveSpeed;
@@ -27,9 +28,10 @@ protected:
 	const int DEATH_FRAMES;
 	const int NORMAL_FRAMES;
 	bool m_animOver;
-	
+
 	sf::Vector2f m_direction;
 
 	bool m_isWin;
+	bool m_isHunted;
 };
 
