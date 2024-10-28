@@ -40,13 +40,25 @@ bool CKMap::LoadMapFromFile(const std::string& filePath)
             case '.': m_mapData[y][x] = ECellType::Pellet; break;
             case 'o': m_mapData[y][x] = ECellType::Energizer; break;
             case 'P':
-                m_mapData[y][x] = ECellType::Player;
-                m_playerInitPos = sf::Vector2f(CellInfo::CELL_SIZE * x, CellInfo::CELL_SIZE * y);
+                m_mapData[y][x] = ECellType::None;
+                m_actorPos[EActorType::Player] = sf::Vector2f(x, y);
                 break;
-            case '0': m_mapData[y][x] = ECellType::Enemy; break;
-            case '1': m_mapData[y][x] = ECellType::Enemy1; break;
-            case '2': m_mapData[y][x] = ECellType::Enemy2; break;
-            case '3': m_mapData[y][x] = ECellType::Enemy3; break;
+            case '0':
+                m_mapData[y][x] = ECellType::None;
+                m_actorPos[EActorType::Enemy0] = sf::Vector2f(x, y);
+                break;
+            case '1':
+                m_mapData[y][x] = ECellType::None;
+                m_actorPos[EActorType::Enemy1] = sf::Vector2f(x, y);
+                break;
+            case '2':
+                m_mapData[y][x] = ECellType::None;
+                m_actorPos[EActorType::Enemy2] = sf::Vector2f(x, y);
+                break;
+            case '3':
+                m_mapData[y][x] = ECellType::None;
+                m_actorPos[EActorType::Enemy3] = sf::Vector2f(x, y);
+                break;
             case '=': m_mapData[y][x] = ECellType::Gate; break;
             default: m_mapData[y][x] = ECellType::None; break;
             }
@@ -106,27 +118,6 @@ void CKMap::Draw(sf::RenderWindow& window)
                 consoleMap[y][x] = '#'; // 벽
             }
             break;
-
-            case ECellType::Player:
-                consoleMap[y][x] = 'P'; // 플레이어
-                break;
-
-            case ECellType::Enemy:
-                consoleMap[y][x] = '0'; // 적 기본 타입
-                break;
-
-            case ECellType::Enemy1:
-                consoleMap[y][x] = '1'; // 적 타입 1
-                break;
-
-            case ECellType::Enemy2:
-                consoleMap[y][x] = '2'; // 적 타입 2
-                break;
-
-            case ECellType::Enemy3:
-                consoleMap[y][x] = '3'; // 적 타입 3
-                break;
-
             default:
                 consoleMap[y][x] = ' '; // 빈 공간
                 break;
@@ -134,10 +125,77 @@ void CKMap::Draw(sf::RenderWindow& window)
         }
     }
 
+    for (const auto& actorPos : m_actorPos) {
+        int x = actorPos.second.x;
+        int y = actorPos.second.y;
+
+        if (x >= 0 && x < m_width && y >= 0 && y < m_height) {
+            switch (actorPos.first) {
+            case EActorType::Player:
+                consoleMap[y][x] = 'P'; // 플레이어
+                break;
+            case EActorType::Enemy0:
+                consoleMap[y][x] = '0'; // 적 0
+                break;
+            case EActorType::Enemy1:
+                consoleMap[y][x] = '1'; // 적 1
+                break;
+            case EActorType::Enemy2:
+                consoleMap[y][x] = '2'; // 적 2
+                break;
+            case EActorType::Enemy3:
+                consoleMap[y][x] = '3'; // 적 3
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     // 콘솔 출력
-    //system("cls");
-    //for (const auto& line : consoleMap)
-    //{
-    //    std::cout << line << std::endl;
-    //}
+    system("cls");
+    for (const auto& line : consoleMap)
+    {
+        std::cout << line << std::endl;
+    }
+}
+
+bool CKMap::IsWall(int x, int y) const {
+    if (x < 0 || x >= m_width || y < 0 || y >= m_height)
+        return false;
+
+    return m_mapData[y][x] == ECellType::Wall;
+}
+
+bool CKMap::IsWall(sf::Vector2f pos) const {
+    int x = static_cast<int>(pos.x / CellInfo::CELL_SIZE);
+    int y = static_cast<int>(pos.y / CellInfo::CELL_SIZE);
+
+    return IsWall(x, y);
+}
+
+void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet, bool useGate)
+{
+    if (getPellet) {
+        if (m_mapData[y][x] == ECellType::Pellet) {
+            m_mapData[y][x] = ECellType::None;
+        }
+        else if (m_mapData[y][x] == ECellType::Energizer) {
+            m_mapData[y][x] = ECellType::None;
+        }
+    }
+    if (useGate && m_mapData[y][x] == ECellType::Gate) {
+
+    }
+    m_actorPos[actorType] = sf::Vector2f(x, y);
+}
+
+void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate)
+{
+    int b_x = static_cast<int>(before.x / CellInfo::CELL_SIZE);
+    int b_y = static_cast<int>(before.y / CellInfo::CELL_SIZE);
+    int x = static_cast<int>(pos.x / CellInfo::CELL_SIZE);
+    int y = static_cast<int>(pos.y / CellInfo::CELL_SIZE);
+
+    ActorMove(actorType, b_x, b_y, x, y, getPellet, useGate);
 }

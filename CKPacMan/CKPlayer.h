@@ -5,7 +5,7 @@
 class CKPlayer : public CKCharacter
 {
 public:
-	CKPlayer(float x, float y, InputHandler* inputHandler);
+	CKPlayer(InputHandler* inputHandler, class CKMap* map);
 	void InitializeSprites() override;
 	void Update(float deltaTime);
 	virtual void Draw(sf::RenderWindow& window) override;
@@ -14,6 +14,7 @@ public:
 	void Reset();
 protected:
 	InputHandler* m_inputHandler;
+	CKMap* m_map;
 
 	sf::Texture m_textureNormal;
 	sf::Texture m_textureDeath;

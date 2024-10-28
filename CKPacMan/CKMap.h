@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "CellInfo.h"
+#include <map>
 
 class CKMap
 {
@@ -13,7 +14,14 @@ public:
 
     // 맵 데이터 그리기
     void Draw(sf::RenderWindow& window);
-    inline sf::Vector2f GetPlayerInitPosition() { return m_playerInitPos; }
+    inline sf::Vector2f GetActorPos(EActorType type) { return m_actorPos[type]; }
+
+    bool IsWall(int x, int y) const;
+    bool IsWall(sf::Vector2f pos) const;
+    void ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet, bool useGate);
+    void ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate);
+    inline int getWidth() { return m_width; }
+    inline int getHeight() { return m_height; }
 private:
     int m_width;
     int m_height;
@@ -27,6 +35,6 @@ private:
     void InitializeSprites();
 
 private:
-    sf::Vector2f m_playerInitPos;
+    std::map<EActorType, sf::Vector2f> m_actorPos;
 };
 

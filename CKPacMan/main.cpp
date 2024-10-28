@@ -34,7 +34,7 @@ int main()
     }
 
     // 플레이어 설정
-    CKPlayer player(map.GetPlayerInitPosition().x, map.GetPlayerInitPosition().y, &inputHandler);
+    CKPlayer player(&inputHandler, &map);
 
     // 시간 설정
     auto previousTime = std::chrono::high_resolution_clock::now();

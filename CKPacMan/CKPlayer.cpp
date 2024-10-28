@@ -1,28 +1,34 @@
 #include "CKPlayer.h"
 #include "CellInfo.h"
 #include <iostream>
+#include "CKMap.h"
 
-CKPlayer::CKPlayer(float x, float y, InputHandler* inputHandler) : CKCharacter(x, y), m_animSpeed(0.1f), m_animTimer(0.0f),
-DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0,0))
+CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map) : CKCharacter(map->GetActorPos(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPos(EActorType::Player).y * CellInfo::CELL_SIZE),
+m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map)
 {
 	InitializeSprites();
 	m_inputHandler = inputHandler;
 
 	m_inputHandler->onMoveRight.subscribe([this]() {
-		m_direction = sf::Vector2f(CellInfo::CELL_SIZE, 0);
-		});
+		
+		if (!m_map->IsWall(m_position + sf::Vector2f(CellInfo::CELL_SIZE, 0)))
+			m_direction = sf::Vector2f(CellInfo::CELL_SIZE, 0);
+	});
 
 	m_inputHandler->onMoveLeft.subscribe([this]() {
-		m_direction = sf::Vector2f(-CellInfo::CELL_SIZE, 0);
-		});
+		if (!m_map->IsWall(m_position + sf::Vector2f(-CellInfo::CELL_SIZE, 0)))
+			m_direction = sf::Vector2f(-CellInfo::CELL_SIZE, 0);
+	});
 
 	m_inputHandler->onMoveUp.subscribe([this]() {
-		m_direction = sf::Vector2f(0, -CellInfo::CELL_SIZE);
-		});
+		if (!m_map->IsWall(m_position + sf::Vector2f(0, -CellInfo::CELL_SIZE)))
+			m_direction = sf::Vector2f(0, -CellInfo::CELL_SIZE);
+	});
 
 	m_inputHandler->onMoveDown.subscribe([this]() {
-		m_direction = sf::Vector2f(0, CellInfo::CELL_SIZE);
-		});
+		if (!m_map->IsWall(m_position + sf::Vector2f(0, CellInfo::CELL_SIZE)))
+			m_direction = sf::Vector2f(0, CellInfo::CELL_SIZE);
+	});
 }
 
 void CKPlayer::InitializeSprites()
@@ -56,8 +62,19 @@ void CKPlayer::Update(float deltaTime)
 	m_moveTimer += deltaTime;
 	if (m_moveTimer > 0.5f)
 	{
-		m_position += m_direction;
-		m_moveTimer = 0.0f;
+		sf::Vector2f pos = m_position + m_direction;
+		if (pos.x < 0) {
+			pos.x = (m_map->getWidth() - 1) * CellInfo::CELL_SIZE;
+		}
+		else if (pos.x >= m_map->getWidth() * CellInfo::CELL_SIZE) {
+			pos.x = 0;
+		}
+		if (!m_map->IsWall(pos))
+		{
+			m_map->ActorMove(EActorType::Player, m_position, pos, true, false);
+			m_position = pos;
+			m_moveTimer = 0.0f;
+		}
 	}
 
 	m_sprite.setPosition(m_position.x, m_position.y);

@@ -6,12 +6,17 @@ enum class ECellType : char
     Wall = '#',
     Pellet = '.',
     Energizer = 'o',
+    Gate = '=',
+};
+
+enum class EActorType : char
+{
     Player = 'P',
-    Enemy = '0',
+    Enemy0 = '0',
     Enemy1 = '1',
     Enemy2 = '2',
     Enemy3 = '3',
-    Gate = '=',
+    Cherry = '¢À',
 };
 
 class CellInfo
