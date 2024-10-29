@@ -45,14 +45,14 @@ int main()
     actors.push_back(&player);
 
     // 몬스터 설정
-    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy0);
+    CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0);
+    actors.push_back(&enemy00);
+    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1);
     actors.push_back(&enemy01);
-    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy1);
+    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2);
     actors.push_back(&enemy02);
-    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy2);
+    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3);
     actors.push_back(&enemy03);
-    CKEnemy enemy04(&map, moveSpeed, EActorType::Enemy3);
-    actors.push_back(&enemy04);
 
 
     // 시간 설정

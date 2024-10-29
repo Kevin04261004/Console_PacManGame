@@ -202,7 +202,8 @@ void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int
     if (useGate && m_mapData[y][x] == ECellType::Gate) {
 
     }
-    m_actorPos[actorType] = sf::Vector2f(x, y);
+    m_actorPos[actorType].x = x;
+    m_actorPos[actorType].y = y;
 }
 
 void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate)

@@ -53,7 +53,7 @@ void CKEnemy::Update(float deltaTime)
 		}
 		if (!m_map->IsWall(pos))
 		{
-			m_map->ActorMove(EActorType::Player, m_position, pos, true, false);
+			m_map->ActorMove(m_enemyType, m_position, pos, true, false);
 			m_position = pos;
 			m_moveTimer = 0.0f;
 		}
