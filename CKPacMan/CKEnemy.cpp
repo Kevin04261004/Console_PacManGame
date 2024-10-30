@@ -13,6 +13,13 @@ m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed), m_isHunted(
 		exit(1);
 	}
 	m_enemyType = type;
+
+	m_pathFinder = new CKPathFinder(m_map);
+}
+
+CKEnemy::~CKEnemy()
+{
+	delete m_pathFinder;
 }
 
 void CKEnemy::InitializeSprites()
@@ -44,6 +51,9 @@ void CKEnemy::Update(float deltaTime)
 	m_moveTimer += deltaTime;
 	if (m_moveTimer > m_moveSpeed)
 	{
+		FindPath(nullptr);
+		m_moveTimer = 0.0f;
+
 		sf::Vector2f pos = m_position + m_direction;
 		if (pos.x < 0) {
 			pos.x = (m_map->getWidth() - 1) * CellInfo::CELL_SIZE;
@@ -55,7 +65,6 @@ void CKEnemy::Update(float deltaTime)
 		{
 			m_map->ActorMove(m_enemyType, m_position, pos, true, false);
 			m_position = pos;
-			m_moveTimer = 0.0f;
 		}
 	}
 
@@ -145,5 +154,14 @@ void CKEnemy::Reset()
 	m_animTimer = 0;
 	m_energizerTimer = 0;
 	m_sprite.setTexture(m_texture);
+}
+
+bool CKEnemy::FindPath(CKActor* target)
+{
+	int sx = m_position.x / CellInfo::CELL_SIZE;
+	int sy = m_position.y / CellInfo::CELL_SIZE;
+	sf::Vector2f playerPos = m_map->GetActorPos(EActorType::Player);
+
+	return m_pathFinder->FindPath(sx, sy, playerPos.x, playerPos.y, m_path);
 }
 

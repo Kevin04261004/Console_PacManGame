@@ -23,6 +23,8 @@ public:
     void ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate);
     inline int getWidth() { return m_width; }
     inline int getHeight() { return m_height; }
+
+    inline ECellType getMapData(int x, int y) { return m_mapData[y][x]; }
 private:
     int m_width;
     int m_height;

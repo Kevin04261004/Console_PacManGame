@@ -1,20 +1,28 @@
 #pragma once
 #include "CKCharacter.h"
 #include "CellInfo.h"
+#include "CKPathFinder.h"
 
 class CKEnemy : public CKCharacter
 {
 public:
 	CKEnemy(class CKMap* map, float moveSpeed, EActorType type);
+	virtual ~CKEnemy();
+
 	void InitializeSprites() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 	virtual void Dead() override;
 	void Win();
 	void Reset();
+	bool FindPath(CKActor* target);
+
 protected:
 	CKMap* m_map;
 	enum class EActorType m_enemyType;
+
+	CKPathFinder* m_pathFinder;
+	std::stack<point> m_path;
 
 	sf::Texture m_texture;
 	sf::Sprite m_eyeSprite;
