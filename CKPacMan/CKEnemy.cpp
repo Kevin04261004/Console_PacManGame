@@ -51,7 +51,10 @@ void CKEnemy::Update(float deltaTime)
 	m_moveTimer += deltaTime;
 	if (m_moveTimer > m_moveSpeed)
 	{
-		FindPath(nullptr);
+		if (!FindPath(nullptr))
+		{
+			// exit(1);
+		}
 		m_moveTimer = 0.0f;
 
 		sf::Vector2f pos = m_position + m_direction;

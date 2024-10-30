@@ -32,10 +32,14 @@ CKPathFinder::~CKPathFinder()
 
 void CKPathFinder::ResetData()
 {
+    m_visitNode.clear();
+
     for (int y = 0; y < m_mapHeight; y++) {
         for (int x = 0; x < m_mapWidth; x++) {
             m_mapData[y][x] = INT16_MAX;
             m_visitData[y][x] = false;
+            m_parent[y][x].x = 0;
+            m_parent[y][x].y = 0;
         }
     }
 }
@@ -57,7 +61,7 @@ void CKPathFinder::extractMin(point& choicePos, int tx, int ty)
                 int hy = abs(ty - curY) * 10;
                 int hdist = hx + hy;
 
-                if (m_mapData[curY][curX] + hdist < min && m_visitData[curY][curX] == false && m_map->getMapData(curY, curX) != ECellType::Wall) {
+                if (m_mapData[curY][curX] + hdist < min && m_visitData[curY][curX] == false) { // && m_map->getMapData(curY, curX) != ECellType::Wall) {
                     min = m_mapData[curY][curX] + hdist;
                     choicePos = { curX, curY };
                 }
@@ -87,7 +91,7 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
 
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
-                if (m_bCanDiagonalMove && (dx != 0 && dy != 0))
+                if (!m_bCanDiagonalMove && (dx != 0 && dy != 0))
                 {
                     continue;
                 }
@@ -98,7 +102,7 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
                 if (nx < 0 || nx > m_mapWidth - 1 || ny < 0 || ny > m_mapHeight - 1)
                     continue;
 
-                if (m_visitData[ny][nx] == false && m_map->getMapData(ny, nx) != ECellType::Wall) {
+                if (m_visitData[ny][nx] == false && m_map->getMapData(nx, ny) != ECellType::Wall) {
                     dist = (dx == 0 || dy == 0) ? 10 : 14;
                     // ¿§Áö ¿ÏÈ­
                     if (m_mapData[choicePos.y][choicePos.x] + dist < m_mapData[ny][nx]) {
@@ -116,6 +120,36 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
     {
         outPath.pop();
     }
+
+    //system("cls");
+    //for (int y = 0; y < m_mapHeight; ++y)
+    //{
+    //    for (int x = 0; x < m_mapWidth; ++x)
+    //    {
+    //        std::cout << (int)(m_map->getMapData(x, y) == ECellType::Wall);
+    //    }
+    //    std::cout << std::endl;
+    //}
+
+    //system("cls");
+    //for (int y = 0; y < m_mapHeight; ++y)
+    //{
+    //    for (int x = 0; x < m_mapWidth; ++x)
+    //    {
+    //        std::cout << m_mapData[y][x] << '\t';
+    //    }
+    //    std::cout << std::endl;
+    //}
+
+    //system("cls");
+    //for (int y = 0; y < m_mapHeight; ++y)
+    //{
+    //    for (int x = 0; x < m_mapWidth; ++x)
+    //    {
+    //        std::cout << m_parent[y][x].x << ',' << m_parent[y][x].y << '\t';
+    //    }
+    //    std::cout << std::endl;
+    //}
 
     if (m_found) {
         point p;

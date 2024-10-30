@@ -108,6 +108,7 @@ void CKPlayer::Draw(sf::RenderWindow& window)
 	m_sprite.setTextureRect(sf::IntRect(CellInfo::CELL_SIZE * frame, CellInfo::CELL_SIZE * yPos, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE));
 
 	window.draw(m_sprite);
+	
 }
 
 void CKPlayer::Dead()

@@ -175,7 +175,7 @@ void CKMap::Draw(sf::RenderWindow& window)
 
 bool CKMap::IsWall(int x, int y) const {
     if (x < 0 || x >= m_width || y < 0 || y >= m_height)
-        return false;
+        return true;
 
     return m_mapData[y][x] == ECellType::Wall;
 }
