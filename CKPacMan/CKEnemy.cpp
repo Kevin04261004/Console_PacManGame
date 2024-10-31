@@ -1,7 +1,8 @@
 #include "CKEnemy.h"
 #include "CKMap.h"
+#include "CKPathFinder.h"
 
-CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type) : CKCharacter(map->GetActorPos(type).x* CellInfo::CELL_SIZE, map->GetActorPos(type).y* CellInfo::CELL_SIZE),
+CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type) : CKCharacter(map->GetActorPoint(type).x* CellInfo::CELL_SIZE, map->GetActorPoint(type).y* CellInfo::CELL_SIZE),
 m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(1), NORMAL_FRAMES(6), m_animOver(false),
 m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
@@ -70,7 +71,7 @@ void CKEnemy::Update(float deltaTime)
 	{
 		m_moveTimer = 0.0f;
 
-		if (!FindPath(nullptr))
+		if (!FindPath(EActorType::Player))
 		{
 			exit(1);
 		}
@@ -191,12 +192,16 @@ void CKEnemy::Reset()
 	m_sprite.setTexture(m_texture);
 }
 
-bool CKEnemy::FindPath(CKActor* target)
+bool CKEnemy::FindPath(EActorType targetType)
 {
-	int sx = m_position.x / CellInfo::CELL_SIZE;
-	int sy = m_position.y / CellInfo::CELL_SIZE;
-	sf::Vector2f playerPos = m_map->GetActorPos(EActorType::Player);
+	point targetPos = point(m_map->GetActorPoint(targetType).x, m_map->GetActorPoint(targetType).y);
 
-	return m_pathFinder->FindPath(sx, sy, playerPos.x, playerPos.y, m_path);
+	return FindPath(targetPos);
+}
+
+bool CKEnemy::FindPath(point targetPoint)
+{
+	point startPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
+	return m_pathFinder->FindPath(startPoint.x, startPoint.y, targetPoint.x, targetPoint.y, m_path);
 }
 

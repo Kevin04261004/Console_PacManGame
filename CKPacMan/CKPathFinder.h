@@ -9,12 +9,18 @@ struct point
 	int x;
 	int y;
 
-	point() : x(0), y(0)
-	{
-	}
+	point() = default;
 
 	point(int x, int y) : x(x), y(y)
 	{
+	}
+
+	point& operator=(const point& other) {
+		if (this != &other) {
+			x = other.x;
+			y = other.y;
+		}
+		return *this;
 	}
 
 	bool operator==(const point& other) const {

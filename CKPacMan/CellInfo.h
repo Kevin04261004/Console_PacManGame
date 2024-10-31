@@ -17,7 +17,7 @@ enum class EActorType : char
     Enemy1 = '1',
     Enemy2 = '2',
     Enemy3 = '3',
-    Cherry = '¢À',
+    Cherry = '9',
 };
 
 class CellInfo

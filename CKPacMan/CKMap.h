@@ -15,7 +15,7 @@ public:
 
     // 맵 데이터 그리기
     void Draw(sf::RenderWindow& window);
-    inline sf::Vector2f GetActorPos(EActorType type) { return m_actorPos[type]; }
+    inline sf::Vector2f GetActorPoint(EActorType type) { return m_actorPoint[type]; }
 
     bool IsWall(int x, int y) const;
     bool IsWall(sf::Vector2f pos) const;
@@ -38,7 +38,7 @@ private:
     void InitializeSprites();
 
 private:
-    std::map<EActorType, sf::Vector2f> m_actorPos;
+    std::map<EActorType, sf::Vector2f> m_actorPoint;
 
 /* Sound */
 private:

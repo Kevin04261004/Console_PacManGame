@@ -16,7 +16,8 @@ public:
 	virtual void Dead() override;
 	void Win();
 	void Reset();
-	bool FindPath(CKActor* target);
+	bool FindPath(EActorType targetType);
+	bool FindPath(point targetPoint);
 
 protected:
 	CKMap* m_map;

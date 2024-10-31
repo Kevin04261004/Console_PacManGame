@@ -54,23 +54,23 @@ bool CKMap::LoadMapFromFile(const std::string& filePath)
             case 'o': m_mapData[y][x] = ECellType::Energizer; break;
             case 'P':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPos[EActorType::Player] = sf::Vector2f(x, y);
+                m_actorPoint[EActorType::Player] = sf::Vector2f(x, y);
                 break;
             case '0':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPos[EActorType::Enemy0] = sf::Vector2f(x, y);
+                m_actorPoint[EActorType::Enemy0] = sf::Vector2f(x, y);
                 break;
             case '1':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPos[EActorType::Enemy1] = sf::Vector2f(x, y);
+                m_actorPoint[EActorType::Enemy1] = sf::Vector2f(x, y);
                 break;
             case '2':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPos[EActorType::Enemy2] = sf::Vector2f(x, y);
+                m_actorPoint[EActorType::Enemy2] = sf::Vector2f(x, y);
                 break;
             case '3':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPos[EActorType::Enemy3] = sf::Vector2f(x, y);
+                m_actorPoint[EActorType::Enemy3] = sf::Vector2f(x, y);
                 break;
             case '=': m_mapData[y][x] = ECellType::Gate; break;
             default: m_mapData[y][x] = ECellType::None; break;
@@ -138,7 +138,7 @@ void CKMap::Draw(sf::RenderWindow& window)
         }
     }
 
-    for (const auto& actorPos : m_actorPos) {
+    for (const auto& actorPos : m_actorPoint) {
         int x = actorPos.second.x;
         int y = actorPos.second.y;
 
@@ -202,8 +202,8 @@ void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int
     if (useGate && m_mapData[y][x] == ECellType::Gate) {
 
     }
-    m_actorPos[actorType].x = x;
-    m_actorPos[actorType].y = y;
+    m_actorPoint[actorType].x = x;
+    m_actorPoint[actorType].y = y;
 }
 
 void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate)
