@@ -2,6 +2,7 @@
 #include "CKCharacter.h"
 #include "CellInfo.h"
 #include "CKPathFinder.h"
+#include "StateManager.h"
 
 class CKEnemy : public CKCharacter
 {
@@ -39,7 +40,8 @@ protected:
 
 	sf::Vector2f m_direction;
 
+	StateManager* m_stateManager;
+
 	bool m_isWin;
-	bool m_isHunted;
 };
 

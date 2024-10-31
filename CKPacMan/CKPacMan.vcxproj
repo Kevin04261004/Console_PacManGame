@@ -19,15 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="CKActor.cpp" />
     <ClCompile Include="CKCharacter.cpp" />
     <ClCompile Include="CKEnemy.cpp" />
     <ClCompile Include="CKMap.cpp" />
     <ClCompile Include="CKPathFinder.cpp" />
     <ClCompile Include="CKPlayer.cpp" />
+    <ClCompile Include="EatenState.cpp" />
+    <ClCompile Include="HuntedState.cpp" />
+    <ClCompile Include="HunterState.cpp" />
+    <ClCompile Include="InBoxState.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CKSoundManager.cpp" />
+    <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sounds\pacman_beginning.wav" />
@@ -40,6 +46,7 @@
     <Media Include="Resource\Sounds\pacman_ringtone_interlude.mp3" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseState.h" />
     <ClInclude Include="CellInfo.h" />
     <ClInclude Include="CKActor.h" />
     <ClInclude Include="CKCharacter.h" />
@@ -48,8 +55,13 @@
     <ClInclude Include="CKPathFinder.h" />
     <ClInclude Include="CKPlayer.h" />
     <ClInclude Include="CKSoundManager.h" />
+    <ClInclude Include="EatenState.h" />
+    <ClInclude Include="HuntedState.h" />
+    <ClInclude Include="HunterState.h" />
+    <ClInclude Include="InBoxState.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="StateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\Maps\CKGameMap.txt" />

@@ -12,6 +12,7 @@ public:
 	virtual void Dead() override;
 	void Win();
 	void Reset();
+
 protected:
 	InputHandler* m_inputHandler;
 	CKMap* m_map;

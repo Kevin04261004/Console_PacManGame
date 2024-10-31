@@ -51,6 +51,24 @@
     <ClCompile Include="CKPathFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HunterState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HuntedState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InBoxState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EatenState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sounds\pacman_beginning.wav">
@@ -107,6 +125,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CKPathFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HunterState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HuntedState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InBoxState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EatenState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

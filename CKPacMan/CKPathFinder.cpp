@@ -61,7 +61,7 @@ void CKPathFinder::extractMin(point& choicePos, int tx, int ty)
                 int hy = abs(ty - curY) * 10;
                 int hdist = hx + hy;
 
-                if (m_mapData[curY][curX] + hdist < min && m_visitData[curY][curX] == false) { // && m_map->getMapData(curY, curX) != ECellType::Wall) {
+                if (m_mapData[curY][curX] + hdist < min && m_visitData[curY][curX] == false && m_map->getMapData(curX, curY) != ECellType::Wall) {
                     min = m_mapData[curY][curX] + hdist;
                     choicePos = { curX, curY };
                 }

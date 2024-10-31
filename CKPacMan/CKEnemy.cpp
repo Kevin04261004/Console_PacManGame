@@ -1,10 +1,9 @@
 #include "CKEnemy.h"
 #include "CKMap.h"
 
-
 CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type) : CKCharacter(map->GetActorPos(type).x* CellInfo::CELL_SIZE, map->GetActorPos(type).y* CellInfo::CELL_SIZE),
 m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(1), NORMAL_FRAMES(6), m_animOver(false),
-m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed), m_isHunted(false)
+m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
 	InitializeSprites();
 	if (type != EActorType::Enemy0 && type != EActorType::Enemy1 && type != EActorType::Enemy2 && type != EActorType::Enemy3)
@@ -15,6 +14,24 @@ m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed), m_isHunted(
 	m_enemyType = type;
 
 	m_pathFinder = new CKPathFinder(m_map);
+	switch (m_enemyType)
+	{
+	case EActorType::Enemy0:
+		m_stateManager = new StateManager(EEnemyState::Hunter, this);
+		break;
+	case EActorType::Enemy1:
+		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		break;
+	case EActorType::Enemy2:
+		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		break;
+	case EActorType::Enemy3:
+		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		break;
+	default:
+		exit(1);
+		break;
+	}
 }
 
 CKEnemy::~CKEnemy()
@@ -51,11 +68,27 @@ void CKEnemy::Update(float deltaTime)
 	m_moveTimer += deltaTime;
 	if (m_moveTimer > m_moveSpeed)
 	{
+		m_moveTimer = 0.0f;
+
 		if (!FindPath(nullptr))
 		{
-			// exit(1);
+			exit(1);
 		}
-		m_moveTimer = 0.0f;
+
+		point curPoint;
+		point nextPoint;
+		if (!m_path.empty())
+		{
+			curPoint = m_path.top();
+			m_path.pop();
+		}
+		if (!m_path.empty())
+		{
+			nextPoint = m_path.top();
+			m_path.pop();
+		}
+
+		m_direction = sf::Vector2f((nextPoint.x - curPoint.x) * CellInfo::CELL_SIZE, (nextPoint.y - curPoint.y) * CellInfo::CELL_SIZE);
 
 		sf::Vector2f pos = m_position + m_direction;
 		if (pos.x < 0) {
@@ -66,7 +99,7 @@ void CKEnemy::Update(float deltaTime)
 		}
 		if (!m_map->IsWall(pos))
 		{
-			m_map->ActorMove(m_enemyType, m_position, pos, true, false);
+			m_map->ActorMove(m_enemyType, m_position, pos, false, true);
 			m_position = pos;
 		}
 	}
@@ -104,7 +137,7 @@ void CKEnemy::Draw(sf::RenderWindow& window)
 	}
 
 
-	m_sprite.setColor(m_isHunted ? sf::Color::Blue : baseColor);
+	m_sprite.setColor(m_stateManager->GetCurrentStateType() == EEnemyState::Hunted ? sf::Color::Blue : baseColor);
 	
 	
 	int xPos = 0;
@@ -127,8 +160,7 @@ void CKEnemy::Draw(sf::RenderWindow& window)
 	yPos = 1;
 	auto hunter = sf::IntRect(CellInfo::CELL_SIZE * xPos, CellInfo::CELL_SIZE * yPos, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE);
 	auto hunted = sf::IntRect(CellInfo::CELL_SIZE * 4, CellInfo::CELL_SIZE * yPos, CellInfo::CELL_SIZE, CellInfo::CELL_SIZE);
-	m_eyeSprite.setTextureRect(m_isHunted ? hunted : hunter);
-	
+	m_eyeSprite.setTextureRect(m_stateManager->GetCurrentStateType() == EEnemyState::Hunted ? hunted : hunter);
 	
 	window.draw(m_sprite);
 	window.draw(m_eyeSprite);
