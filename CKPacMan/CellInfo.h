@@ -11,6 +11,7 @@ enum class ECellType : char
 
 enum class EActorType : char
 {
+    None = 0,
     Player = 'P',
     Enemy0 = '0',
     Enemy1 = '1',

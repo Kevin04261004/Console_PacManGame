@@ -8,7 +8,7 @@ public:
 
 	}
 	virtual void Enter() override;
-	virtual void Excute() override;
+	virtual void Excute(float deltaTime) override;
 	virtual void Exit() override;
 };
 

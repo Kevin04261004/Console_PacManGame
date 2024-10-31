@@ -15,11 +15,12 @@ StateManager::StateManager(EEnemyState initState, CKActor* parent)
 	parentEnemy = static_cast<CKEnemy*>(parent);
 
 	CurrentStateType = initState;
+	stateMap[CurrentStateType]->Enter();
 }
 
-void StateManager::UpdateState()
+void StateManager::UpdateState(float deltaTime)
 {
-	stateMap[CurrentStateType]->Excute();
+	stateMap[CurrentStateType]->Excute(deltaTime);
 }
 
 EEnemyState StateManager::GetCurrentStateType()

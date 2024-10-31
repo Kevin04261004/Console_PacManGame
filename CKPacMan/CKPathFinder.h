@@ -8,6 +8,31 @@ struct point
 {
 	int x;
 	int y;
+
+	point() : x(0), y(0)
+	{
+	}
+
+	point(int x, int y) : x(x), y(y)
+	{
+	}
+
+	bool operator==(const point& other) const {
+		return (x == other.x && y == other.y);
+	}
+
+	bool operator!=(const point& other) const {
+		return (x != other.x && y != other.y);
+	}
+
+	point operator+(const point& other) const {
+		return point(x + other.x, y + other.y);
+	}
+
+	// »¬¼À ¿¬»êÀÚ ¿À¹ö·Îµù
+	point operator-(const point& other) const {
+		return point(x - other.x, y - other.y);
+	}
 };
 
 class CKPathFinder

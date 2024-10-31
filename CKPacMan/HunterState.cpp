@@ -4,8 +4,9 @@ void HunterState::Enter()
 {
 }
 
-void HunterState::Excute()
+void HunterState::Excute(float deltaTime)
 {
+
 }
 
 void HunterState::Exit()

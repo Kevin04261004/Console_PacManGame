@@ -4,7 +4,7 @@ void EatenState::Enter()
 {
 }
 
-void EatenState::Excute()
+void EatenState::Excute(float deltaTime)
 {
 }
 

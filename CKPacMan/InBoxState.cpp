@@ -4,7 +4,7 @@ void InBoxState::Enter()
 {
 }
 
-void InBoxState::Excute()
+void InBoxState::Excute(float deltaTime)
 {
 }
 
