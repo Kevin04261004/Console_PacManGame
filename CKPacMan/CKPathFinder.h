@@ -65,6 +65,6 @@ public:
 
 public:
 	bool FindPath(int sx, int sy, int tx, int ty, std::stack<point>& outPath);
-
+	bool FindRandomPath(int sx, int sy, int width, int height, std::stack<point>& outPath);
 };
 

@@ -4,16 +4,16 @@
 class HunterState : public BaseState
 {
 protected:
-	class CKActor* target;
+	bool bIsTargetFound;
 	float huntingTime;
-	float timer;
+	float huntingTimer;
 
 public:
 	HunterState(StateManager* InStateManager) : BaseState(InStateManager)
 	{
-		target = nullptr;
-		huntingTime = 0.3f;
-		timer = 0.0f;
+		bIsTargetFound = true;
+		huntingTime = 0.5f;
+		huntingTimer = 0.0f;
 	}
 	virtual void Enter() override;
 	virtual void Excute(float deltaTime) override;

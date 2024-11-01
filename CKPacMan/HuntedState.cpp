@@ -16,7 +16,7 @@ void HuntedState::Excute(float deltaTime)
 		return;
 	}
 
-
+	
 }
 
 void HuntedState::Exit()

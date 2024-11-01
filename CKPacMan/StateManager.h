@@ -14,7 +14,7 @@ enum class EEnemyState : char
 class StateManager
 {
 private:
-	std::map<EEnemyState, BaseState*> stateMap;
+	std::map<EEnemyState, BaseState*> m_stateMap;
 
 	EEnemyState CurrentStateType;
 

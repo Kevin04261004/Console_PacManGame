@@ -19,8 +19,8 @@ public:
 
     bool IsWall(int x, int y) const;
     bool IsWall(sf::Vector2f pos) const;
-    void ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet, bool useGate);
-    void ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate);
+    void ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet);
+    void ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet);
     inline int getWidth() { return m_width; }
     inline int getHeight() { return m_height; }
 

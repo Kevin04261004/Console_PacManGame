@@ -187,7 +187,7 @@ bool CKMap::IsWall(sf::Vector2f pos) const {
     return IsWall(x, y);
 }
 
-void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet, bool useGate)
+void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int y, bool getPellet)
 {
     if (getPellet) {
         if (m_mapData[y][x] == ECellType::Pellet) {
@@ -199,19 +199,16 @@ void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int
             m_mapData[y][x] = ECellType::None;
         }
     }
-    if (useGate && m_mapData[y][x] == ECellType::Gate) {
-
-    }
     m_actorPoint[actorType].x = x;
     m_actorPoint[actorType].y = y;
 }
 
-void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet, bool useGate)
+void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet)
 {
     int b_x = static_cast<int>(before.x / CellInfo::CELL_SIZE);
     int b_y = static_cast<int>(before.y / CellInfo::CELL_SIZE);
     int x = static_cast<int>(pos.x / CellInfo::CELL_SIZE);
     int y = static_cast<int>(pos.y / CellInfo::CELL_SIZE);
 
-    ActorMove(actorType, b_x, b_y, x, y, getPellet, useGate);
+    ActorMove(actorType, b_x, b_y, x, y, getPellet);
 }

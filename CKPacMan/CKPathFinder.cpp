@@ -163,3 +163,9 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
 
     return m_found;
 }
+
+bool CKPathFinder::FindRandomPath(int sx, int sy, int width, int height, std::stack<point>& outPath)
+{
+
+    return false;
+}

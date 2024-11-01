@@ -53,6 +53,8 @@ void CKEnemy::InitializeSprites()
 
 void CKEnemy::Update(float deltaTime)
 {
+	m_stateManager->UpdateState(deltaTime);
+
 	m_animTimer += deltaTime;
 	if (m_animTimer > (m_isDead ? DEATH_FRAMES : NORMAL_FRAMES) * m_animSpeed)
 	{
@@ -63,45 +65,6 @@ void CKEnemy::Update(float deltaTime)
 		else
 		{
 			m_animTimer = 0.f;
-		}
-	}
-
-	m_moveTimer += deltaTime;
-	if (m_moveTimer > m_moveSpeed)
-	{
-		m_moveTimer = 0.0f;
-
-		if (!FindPath(EActorType::Player))
-		{
-			exit(1);
-		}
-
-		point curPoint;
-		point nextPoint;
-		if (!m_path.empty())
-		{
-			curPoint = m_path.top();
-			m_path.pop();
-		}
-		if (!m_path.empty())
-		{
-			nextPoint = m_path.top();
-			m_path.pop();
-		}
-
-		m_direction = sf::Vector2f((nextPoint.x - curPoint.x) * CellInfo::CELL_SIZE, (nextPoint.y - curPoint.y) * CellInfo::CELL_SIZE);
-
-		sf::Vector2f pos = m_position + m_direction;
-		if (pos.x < 0) {
-			pos.x = (m_map->getWidth() - 1) * CellInfo::CELL_SIZE;
-		}
-		else if (pos.x >= m_map->getWidth() * CellInfo::CELL_SIZE) {
-			pos.x = 0;
-		}
-		if (!m_map->IsWall(pos))
-		{
-			m_map->ActorMove(m_enemyType, m_position, pos, false, true);
-			m_position = pos;
 		}
 	}
 
@@ -202,6 +165,70 @@ bool CKEnemy::FindPath(EActorType targetType)
 bool CKEnemy::FindPath(point targetPoint)
 {
 	point startPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
+
 	return m_pathFinder->FindPath(startPoint.x, startPoint.y, targetPoint.x, targetPoint.y, m_path);
 }
 
+void CKEnemy::SetNextDirection()
+{
+	if (!TrySetNextPointInPath())
+	{
+		return;
+	}
+
+	m_direction = sf::Vector2f(0, 0);
+	point nextPoint;
+	if (!m_path.empty())
+	{
+		nextPoint = m_path.top();
+		sf::Vector2f nextPos(nextPoint.x * CellInfo::CELL_SIZE, nextPoint.y * CellInfo::CELL_SIZE);
+		m_path.pop();
+		m_direction = nextPos - m_position;
+	}
+}
+
+void CKEnemy::SetReverseNextDirection()
+{
+	if (!TrySetNextPointInPath())
+	{
+		return;
+	}
+}
+
+bool CKEnemy::TrySetNextPointInPath()
+{
+	point currentPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
+	while (!m_path.empty() && m_path.top() != currentPoint)
+	{
+		m_path.pop();
+	}
+
+	if (!m_path.empty())
+	{
+		m_path.pop();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+void CKEnemy::Move()
+{
+	sf::Vector2f pos = m_position + m_direction;
+
+	// 양 옆으로 이동이 가능하게.
+	if (pos.x < 0) {
+		pos.x = (m_map->getWidth() - 1) * CellInfo::CELL_SIZE;
+	}
+	else if (pos.x >= m_map->getWidth() * CellInfo::CELL_SIZE) {
+		pos.x = 0;
+	}
+	if (!m_map->IsWall(pos))
+	{
+		m_map->ActorMove(m_enemyType, m_position, pos, false);
+		m_position = pos;
+	}
+}

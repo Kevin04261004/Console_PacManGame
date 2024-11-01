@@ -19,6 +19,14 @@ public:
 	bool FindPath(EActorType targetType);
 	bool FindPath(point targetPoint);
 
+	void SetNextDirection();
+
+	void SetReverseNextDirection();
+
+	bool TrySetNextPointInPath();
+
+	void Move();
+	
 protected:
 	CKMap* m_map;
 	enum class EActorType m_enemyType;
@@ -34,7 +42,6 @@ protected:
 	float m_moveSpeed;
 	float m_animTimer;
 	float m_energizerTimer;
-	float m_moveTimer;
 	const int DEATH_FRAMES;
 	const int NORMAL_FRAMES;
 	bool m_animOver;

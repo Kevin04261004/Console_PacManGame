@@ -88,9 +88,7 @@ int main()
         map.Draw(window);
         for (auto actor : actors)
         {
-            
             actor->Draw(window);
-            
         }
         window.display();
     }
