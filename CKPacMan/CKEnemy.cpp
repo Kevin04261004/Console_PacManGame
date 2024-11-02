@@ -1,10 +1,11 @@
 #include "CKEnemy.h"
 #include "CKMap.h"
 #include "CKPathFinder.h"
+#include "CKSoundManager.h"
 
-CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type, GameManager* gm) : CKCharacter(map->GetActorPoint(type).x* CellInfo::CELL_SIZE, map->GetActorPoint(type).y* CellInfo::CELL_SIZE, gm),
+CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type, GameManager* gm, CKSoundManager* soundManager) : CKCharacter(map->GetActorPoint(type).x* CellInfo::CELL_SIZE, map->GetActorPoint(type).y* CellInfo::CELL_SIZE, gm),
 m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(1), NORMAL_FRAMES(6), m_animOver(false),
-m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
+m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed), m_soundManager(soundManager)
 {
 	InitializeSprites();
 	if (type != EActorType::Enemy0 && type != EActorType::Enemy1 && type != EActorType::Enemy2 && type != EActorType::Enemy3)
@@ -100,9 +101,7 @@ void CKEnemy::Draw(sf::RenderWindow& window)
 		break;
 	}
 
-
 	m_sprite.setColor(m_stateManager->GetCurrentStateType() == EEnemyState::Hunted ? sf::Color::Blue : baseColor);
-	
 	
 	int xPos = 0;
 	if (m_direction == sf::Vector2f(CellInfo::CELL_SIZE, 0)) // Right

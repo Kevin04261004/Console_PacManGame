@@ -70,6 +70,7 @@ bool CKMap::LoadMapFromFile(const std::string& filePath)
             case '2':
                 m_mapData[y][x] = ECellType::None;
                 m_actorPointMap[EActorType::Enemy2] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::InBox] = sf::Vector2f(x, y);
                 break;
             case '3':
                 m_mapData[y][x] = ECellType::None;

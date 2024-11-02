@@ -7,7 +7,7 @@
 class CKEnemy : public CKCharacter
 {
 public:
-	CKEnemy(class CKMap* map, float moveSpeed, EActorType type, GameManager* gm);
+	CKEnemy(class CKMap* map, float moveSpeed, EActorType type, GameManager* gm, class CKSoundManager* soundManager);
 	virtual ~CKEnemy();
 
 	void InitializeSprites() override;
@@ -34,8 +34,11 @@ public:
 
 	void PlayerCollisionEnter();
 
+	inline CKSoundManager* GetSoundManager() { return m_soundManager; }
+
 protected:
 	CKMap* m_map;
+	CKSoundManager* m_soundManager;
 	enum class EActorType m_enemyType;
 
 	CKPathFinder* m_pathFinder;

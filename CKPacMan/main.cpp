@@ -39,16 +39,16 @@ int main()
     map.SetActor(EActorType::Player, &player);
 
     // 몬스터 설정
-    CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0, &gameManager);
+    CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0, &gameManager, &soundManager);
     map.SetActor(EActorType::Enemy0, &enemy00);
-    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1, &gameManager);
+    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1, &gameManager, &soundManager);
     map.SetActor(EActorType::Enemy1, &enemy01);
-    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2, &gameManager);
+    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2, &gameManager, &soundManager);
     map.SetActor(EActorType::Enemy2, &enemy02);
-    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3, &gameManager);
+    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3, &gameManager, &soundManager);
     map.SetActor(EActorType::Enemy3, &enemy03);
-
-
+    CKActor inBox(map.GetActorPoint(EActorType::Enemy2).x * CellInfo::CELL_SIZE, map.GetActorPoint(EActorType::Enemy2).y * CellInfo::CELL_SIZE, &gameManager);
+    map.SetActor(EActorType::Enemy2, &inBox);
     // 시간 설정
     auto previousTime = std::chrono::high_resolution_clock::now();
 
