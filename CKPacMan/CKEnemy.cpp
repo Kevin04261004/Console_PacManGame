@@ -44,7 +44,7 @@ void CKEnemy::InitializeSprites()
 {
 	if (!m_texture.loadFromFile("Resource/Images/Ghost" + std::to_string(CellInfo::CELL_SIZE) + ".png"))
 	{
-
+		exit(1);
 	}
 	m_sprite.setTexture(m_texture);
 	m_eyeSprite.setTexture(m_texture);
@@ -58,7 +58,7 @@ void CKEnemy::Update(float deltaTime)
 	m_animTimer += deltaTime;
 	if (m_animTimer > (m_isDead ? DEATH_FRAMES : NORMAL_FRAMES) * m_animSpeed)
 	{
-		if (m_isDead || m_isWin)
+		if (m_isDead)
 		{
 			m_animOver = true;
 		}
@@ -134,13 +134,6 @@ void CKEnemy::Dead()
 {
 	m_isDead = true;
 	m_animTimer = 0.0f;
-}
-
-void CKEnemy::Win()
-{
-	m_isWin = true;
-	m_animTimer = 0.0f;
-	m_sprite.setTexture(m_texture);
 }
 
 void CKEnemy::Reset()
@@ -301,4 +294,21 @@ bool CKEnemy::HasPath()
 bool CKEnemy::IsPlayerInRange(int range)
 {
 	return m_pathFinder->FindTarget(range, m_position, EActorType::Player);
+}
+
+void CKEnemy::PlayerCollisionEnter()
+{
+	if (m_stateManager == nullptr)
+	{
+		std::cerr << "Error: m_stateManager is NULL in PlayerCollisionEnter!" << std::endl;
+		return;
+	}
+	if (m_stateManager->GetCurrentStateType() == EEnemyState::Hunted)
+	{
+		m_stateManager->ChangeState(EEnemyState::Eaten);
+	}
+	else if (m_stateManager->GetCurrentStateType() == EEnemyState::Hunter)
+	{
+		m_gameManager->GameOver();
+	}
 }

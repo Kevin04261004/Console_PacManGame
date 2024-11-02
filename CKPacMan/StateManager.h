@@ -25,7 +25,7 @@ public:
 	StateManager(EEnemyState initState, class CKActor* actor, GameManager* gm);
 	void ChangeState(EEnemyState state);
 	void UpdateState(float deltaTime);
-	EEnemyState GetCurrentStateType();
+	const EEnemyState& const GetCurrentStateType();
 	inline CKEnemy* GetOwner() { return m_parentEnemy; }
 	inline GameManager* GetGM() { return m_gameManager; }
 };

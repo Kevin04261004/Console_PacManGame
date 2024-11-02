@@ -25,7 +25,7 @@ void StateManager::UpdateState(float deltaTime)
 	m_stateMap[m_CurrentStateType]->Excute(deltaTime);
 }
 
-EEnemyState StateManager::GetCurrentStateType()
+const EEnemyState& const StateManager::GetCurrentStateType()
 {
 	return m_CurrentStateType;
 }

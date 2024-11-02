@@ -37,16 +37,6 @@
     <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Resource\Sounds\pacman_beginning.wav" />
-    <Media Include="Resource\Sounds\pacman_chomp.wav" />
-    <Media Include="Resource\Sounds\pacman_death.wav" />
-    <Media Include="Resource\Sounds\pacman_eatfruit.wav" />
-    <Media Include="Resource\Sounds\pacman_eatghost.wav" />
-    <Media Include="Resource\Sounds\pacman_intermission.wav" />
-    <Media Include="Resource\Sounds\pacman_ringtone.mp3" />
-    <Media Include="Resource\Sounds\pacman_ringtone_interlude.mp3" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="CellInfo.h" />
     <ClInclude Include="CKActor.h" />
@@ -75,6 +65,26 @@
     <Image Include="Resource\Images\Map32.png" />
     <Image Include="Resource\Images\Pacman16.png" />
     <Image Include="Resource\Images\PacmanDeath16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sounds\eat_dot_0.wav" />
+    <Media Include="Resource\Sounds\eat_dot_1.wav" />
+    <Media Include="Resource\Sounds\eyes.wav" />
+    <Media Include="Resource\Sounds\eyes_firstloop.wav" />
+    <Media Include="Resource\Sounds\fright.wav" />
+    <Media Include="Resource\Sounds\fright_firstloop.wav" />
+    <Media Include="Resource\Sounds\intermission.wav" />
+    <Media Include="Resource\Sounds\siren0.wav" />
+    <Media Include="Resource\Sounds\siren0_firstloop.wav" />
+    <Media Include="Resource\Sounds\siren1.wav" />
+    <Media Include="Resource\Sounds\siren1_firstloop.wav" />
+    <Media Include="Resource\Sounds\siren2.wav" />
+    <Media Include="Resource\Sounds\siren2_firstloop.wav" />
+    <Media Include="Resource\Sounds\siren3.wav" />
+    <Media Include="Resource\Sounds\siren3_firstloop.wav" />
+    <Media Include="Resource\Sounds\siren4.wav" />
+    <Media Include="Resource\Sounds\siren4_firstloop.wav" />
+    <Media Include="Resource\Sounds\start.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -31,6 +31,9 @@ public:
 
 	inline int GetEnemyType() { return (int)m_enemyType; }
 	bool IsPlayerInRange(int range);
+
+	void PlayerCollisionEnter();
+
 protected:
 	CKMap* m_map;
 	enum class EActorType m_enemyType;

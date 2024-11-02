@@ -12,8 +12,6 @@
 
 int main()
 {
-    GameManager gameManager;
-
     // 창 설정
     sf::RenderWindow window(sf::VideoMode(700, 700), "PacMan", sf::Style::Close);
 
@@ -21,16 +19,12 @@ int main()
     InputHandler inputHandler;
 
     // 오디오 설정
-    sf::SoundBuffer BGMBuffer;
-    if (!BGMBuffer.loadFromFile("Resource/Sounds/siren0.wav"))
-    {
-        return -1;
-    }
-
     CKSoundManager soundManager;
-    soundManager.PlayBGM(BGMBuffer);
     soundManager.SetBGMVolume(30.0f);
     soundManager.SetSFXVolume(30.0f);
+
+    // 게임 메니저
+    GameManager gameManager(&soundManager);
 
     // 맵 설정
     CKMap map(&soundManager, &gameManager);
@@ -39,23 +33,20 @@ int main()
         return -1;
     }
 
-    // Actor에 추가.
-    std::vector<class CKActor*> actors;
-
     // 플레이어 설정
     float moveSpeed = 0.15f;
     CKPlayer player(&inputHandler, &map, moveSpeed, &gameManager);
-    actors.push_back(&player);
+    map.SetActor(EActorType::Player, &player);
 
     // 몬스터 설정
     CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0, &gameManager);
-    actors.push_back(&enemy00);
+    map.SetActor(EActorType::Enemy0, &enemy00);
     CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1, &gameManager);
-    actors.push_back(&enemy01);
+    map.SetActor(EActorType::Enemy1, &enemy01);
     CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2, &gameManager);
-    actors.push_back(&enemy02);
+    map.SetActor(EActorType::Enemy2, &enemy02);
     CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3, &gameManager);
-    actors.push_back(&enemy03);
+    map.SetActor(EActorType::Enemy3, &enemy03);
 
 
     // 시간 설정
@@ -84,17 +75,18 @@ int main()
         gameManager.Update(deltaTime);
 
         // 플레이어 업데이트 (DeltaTime 사용)
-        for (auto actor : actors)
+        const auto actorMap = map.GetActorMap();
+        for (auto actor : actorMap)
         {
-            actor->Update(deltaTime);
+            actor.second->Update(deltaTime);
         }
 
         // 화면 그리기
         window.clear();
         map.Draw(window);
-        for (auto actor : actors)
+        for (auto actor : actorMap)
         {
-            actor->Draw(window);
+            actor.second->Draw(window);
         }
         window.display();
     }

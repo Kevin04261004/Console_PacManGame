@@ -1,6 +1,7 @@
 #include "CKMap.h"
 #include <fstream>
 #include "CKSoundManager.h"
+#include "CKEnemy.h"
 
 CKMap::CKMap(CKSoundManager* soundManager, GameManager* gm) : m_width(0), m_height(0)
 {
@@ -56,23 +57,23 @@ bool CKMap::LoadMapFromFile(const std::string& filePath)
             case 'o': m_mapData[y][x] = ECellType::Energizer; break;
             case 'P':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPoint[EActorType::Player] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::Player] = sf::Vector2f(x, y);
                 break;
             case '0':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPoint[EActorType::Enemy0] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::Enemy0] = sf::Vector2f(x, y);
                 break;
             case '1':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPoint[EActorType::Enemy1] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::Enemy1] = sf::Vector2f(x, y);
                 break;
             case '2':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPoint[EActorType::Enemy2] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::Enemy2] = sf::Vector2f(x, y);
                 break;
             case '3':
                 m_mapData[y][x] = ECellType::None;
-                m_actorPoint[EActorType::Enemy3] = sf::Vector2f(x, y);
+                m_actorPointMap[EActorType::Enemy3] = sf::Vector2f(x, y);
                 break;
             case '=': m_mapData[y][x] = ECellType::Gate; break;
             default: m_mapData[y][x] = ECellType::None; break;
@@ -140,7 +141,7 @@ void CKMap::Draw(sf::RenderWindow& window)
         }
     }
 
-    for (const auto& actorPos : m_actorPoint) {
+    for (const auto& actorPos : m_actorPointMap) {
         int x = actorPos.second.x;
         int y = actorPos.second.y;
 
@@ -202,8 +203,10 @@ void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int
             m_gameManager->SetPowerTime();
         }
     }
-    m_actorPoint[actorType].x = x;
-    m_actorPoint[actorType].y = y;
+    m_actorPointMap[actorType].x = x;
+    m_actorPointMap[actorType].y = y;
+
+    CheckCollisionWithEnemies();
 }
 
 void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f pos, bool getPellet)
@@ -214,4 +217,24 @@ void CKMap::ActorMove(EActorType actorType, sf::Vector2f before, sf::Vector2f po
     int y = static_cast<int>(pos.y / CellInfo::CELL_SIZE);
 
     ActorMove(actorType, b_x, b_y, x, y, getPellet);
+}
+
+void CKMap::CheckCollisionWithEnemies()
+{
+    // 플레이어 위치 가져오기
+    sf::Vector2f playerPoint = m_actorPointMap[EActorType::Player];
+
+    // 각 적과 플레이어의 위치가 같은지 검사
+    for (auto& actorData : m_actorPointMap)
+    {
+        if (actorData.first == EActorType::Player)
+        {
+            continue;
+        }
+        if (actorData.second == playerPoint)
+        {
+            CKEnemy* enemy = dynamic_cast<CKEnemy*>(m_actorMap[actorData.first]);
+            enemy->PlayerCollisionEnter();
+        }
+    }
 }
