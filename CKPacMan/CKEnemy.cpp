@@ -22,13 +22,13 @@ m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed), m_soundMana
 		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
 		break;
 	case EActorType::Enemy1:
-		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
+		m_stateManager = new StateManager(EEnemyState::InBox, this, gm);
 		break;
 	case EActorType::Enemy2:
-		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
+		m_stateManager = new StateManager(EEnemyState::InBox, this, gm);
 		break;
 	case EActorType::Enemy3:
-		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
+		m_stateManager = new StateManager(EEnemyState::InBox, this, gm);
 		break;
 	default:
 		exit(1);

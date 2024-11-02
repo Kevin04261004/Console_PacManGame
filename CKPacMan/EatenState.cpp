@@ -14,14 +14,13 @@ void EatenState::Excute(float deltaTime)
 	runTimer += deltaTime;
 	if (runTimer > runTime)
 	{
+		if (!stateManager->GetOwner()->HasPath())
+		{
+			stateManager->ChangeState(EEnemyState::InBox);
+		}
 		runTimer = 0.0f;
 		stateManager->GetOwner()->SetNextDirection();
 		stateManager->GetOwner()->Move();
-
-		//if (!stateManager->GetOwner()->HasPath())
-		//{
-		//	stateManager->ChangeState(EEnemyState::InBox);
-		//}
 	}
 }
 
