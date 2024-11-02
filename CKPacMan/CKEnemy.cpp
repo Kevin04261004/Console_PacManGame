@@ -169,33 +169,40 @@ bool CKEnemy::FindPath(point targetPoint)
 	return m_pathFinder->FindPath(startPoint.x, startPoint.y, targetPoint.x, targetPoint.y, m_path);
 }
 
+void CKEnemy::FindRandomPointAndPath()
+{
+	point startPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
+
+	m_pathFinder->FindRandomPath(startPoint.x, startPoint.y, m_path);
+}
+
 void CKEnemy::SetNextDirection()
 {
-	if (!TrySetNextPointInPath())
+	if (!TrySetSamePointInPath())
 	{
 		return;
 	}
 
 	m_direction = sf::Vector2f(0, 0);
 	point nextPoint;
-	if (!m_path.empty())
+	if (HasPath())
 	{
+		m_path.pop();
 		nextPoint = m_path.top();
 		sf::Vector2f nextPos(nextPoint.x * CellInfo::CELL_SIZE, nextPoint.y * CellInfo::CELL_SIZE);
-		m_path.pop();
 		m_direction = nextPos - m_position;
 	}
 }
 
 void CKEnemy::SetReverseNextDirection()
 {
-	if (!TrySetNextPointInPath())
+	if (!TrySetSamePointInPath())
 	{
 		return;
 	}
 }
 
-bool CKEnemy::TrySetNextPointInPath()
+bool CKEnemy::TrySetSamePointInPath()
 {
 	point currentPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
 	while (!m_path.empty() && m_path.top() != currentPoint)
@@ -205,7 +212,7 @@ bool CKEnemy::TrySetNextPointInPath()
 
 	if (!m_path.empty())
 	{
-		m_path.pop();
+		// m_path.pop();
 		return true;
 	}
 	else
@@ -230,5 +237,21 @@ void CKEnemy::Move()
 	{
 		m_map->ActorMove(m_enemyType, m_position, pos, false);
 		m_position = pos;
+	}
+}
+
+bool CKEnemy::HasPath()
+{
+	if (!TrySetSamePointInPath())
+	{
+		return false;
+	}
+	if (m_path.empty() || m_path.size() < 2)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }

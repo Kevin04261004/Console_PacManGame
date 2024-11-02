@@ -12,7 +12,7 @@ public:
 	HunterState(StateManager* InStateManager) : BaseState(InStateManager)
 	{
 		bIsTargetFound = true;
-		huntingTime = 0.5f;
+		huntingTime = 0.15f;
 		huntingTimer = 0.0f;
 	}
 	virtual void Enter() override;

@@ -121,35 +121,35 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
         outPath.pop();
     }
 
-    //system("cls");
-    //for (int y = 0; y < m_mapHeight; ++y)
-    //{
-    //    for (int x = 0; x < m_mapWidth; ++x)
-    //    {
-    //        std::cout << (int)(m_map->getMapData(x, y) == ECellType::Wall);
-    //    }
-    //    std::cout << std::endl;
-    //}
+   /* system("cls");
+    for (int y = 0; y < m_mapHeight; ++y)
+    {
+        for (int x = 0; x < m_mapWidth; ++x)
+        {
+            std::cout << (int)(m_map->getMapData(x, y) == ECellType::Wall);
+        }
+        std::cout << std::endl;
+    }
 
-    //system("cls");
-    //for (int y = 0; y < m_mapHeight; ++y)
-    //{
-    //    for (int x = 0; x < m_mapWidth; ++x)
-    //    {
-    //        std::cout << m_mapData[y][x] << '\t';
-    //    }
-    //    std::cout << std::endl;
-    //}
+    system("cls");
+    for (int y = 0; y < m_mapHeight; ++y)
+    {
+        for (int x = 0; x < m_mapWidth; ++x)
+        {
+            std::cout << m_mapData[y][x] << '\t';
+        }
+        std::cout << std::endl;
+    }
 
-    //system("cls");
-    //for (int y = 0; y < m_mapHeight; ++y)
-    //{
-    //    for (int x = 0; x < m_mapWidth; ++x)
-    //    {
-    //        std::cout << m_parent[y][x].x << ',' << m_parent[y][x].y << '\t';
-    //    }
-    //    std::cout << std::endl;
-    //}
+    system("cls");
+    for (int y = 0; y < m_mapHeight; ++y)
+    {
+        for (int x = 0; x < m_mapWidth; ++x)
+        {
+            std::cout << m_parent[y][x].x << ',' << m_parent[y][x].y << '\t';
+        }
+        std::cout << std::endl;
+    }*/
 
     if (m_found) {
         point p;
@@ -164,8 +164,23 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
     return m_found;
 }
 
-bool CKPathFinder::FindRandomPath(int sx, int sy, int width, int height, std::stack<point>& outPath)
+bool CKPathFinder::FindRandomPath(int sx, int sy, std::stack<point>& outPath)
 {
+    std::srand(std::time(nullptr));
 
-    return false;
+    point target;
+    while (true)
+    {
+        target.x = std::rand() % (m_mapWidth - 2) + 1;
+        target.y = std::rand() % (m_mapHeight - 2) + 1;
+
+        if (m_map->getMapData(target.x, target.y) != ECellType::Wall)
+        {
+            break;
+        }
+    }
+
+    FindPath(sx, sy, target.x, target.y, outPath);
+    
+    return true;
 }

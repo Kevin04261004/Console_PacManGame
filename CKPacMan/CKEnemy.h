@@ -18,15 +18,16 @@ public:
 	void Reset();
 	bool FindPath(EActorType targetType);
 	bool FindPath(point targetPoint);
+	void FindRandomPointAndPath();
 
 	void SetNextDirection();
 
 	void SetReverseNextDirection();
 
-	bool TrySetNextPointInPath();
+	bool TrySetSamePointInPath();
 
 	void Move();
-	
+	bool HasPath();
 protected:
 	CKMap* m_map;
 	enum class EActorType m_enemyType;

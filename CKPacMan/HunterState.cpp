@@ -15,7 +15,13 @@ void HunterState::Excute(float deltaTime)
 		if (!bIsTargetFound)
 		{
 			// TODO: 랜덤한 point를 잡아서 FindPath();
-			
+			if (!stateManager->GetOwner()->HasPath())
+			{
+				stateManager->GetOwner()->FindRandomPointAndPath();
+			}
+			stateManager->GetOwner()->SetNextDirection();
+			stateManager->GetOwner()->Move();
+
 			// TODO: target이 범위 내에 있는지 찾기.
 
 		}
