@@ -3,7 +3,7 @@
 #include <iostream>
 #include "CKMap.h"
 
-CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map, float moveSpeed) : CKCharacter(map->GetActorPoint(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPoint(EActorType::Player).y * CellInfo::CELL_SIZE),
+CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map, float moveSpeed, GameManager* gm) : CKCharacter(map->GetActorPoint(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPoint(EActorType::Player).y * CellInfo::CELL_SIZE, gm),
 m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
 	InitializeSprites();

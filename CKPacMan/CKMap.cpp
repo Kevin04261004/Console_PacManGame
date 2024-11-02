@@ -2,7 +2,7 @@
 #include <fstream>
 #include "CKSoundManager.h"
 
-CKMap::CKMap(CKSoundManager* soundManager) : m_width(0), m_height(0)
+CKMap::CKMap(CKSoundManager* soundManager, GameManager* gm) : m_width(0), m_height(0)
 {
     InitializeSprites();
     if (!m_pellet01SoundBuffer.loadFromFile("Resource/Sounds/eat_dot_0.wav"))
@@ -17,6 +17,8 @@ CKMap::CKMap(CKSoundManager* soundManager) : m_width(0), m_height(0)
     }
     m_soundManager = soundManager;
     m_pelletTrigger = false;
+
+    m_gameManager = gm;
 }
 
 bool CKMap::LoadMapFromFile(const std::string& filePath)
@@ -197,6 +199,7 @@ void CKMap::ActorMove(EActorType actorType, int beforeX, int beforeY, int x, int
         }
         else if (m_mapData[y][x] == ECellType::Energizer) {
             m_mapData[y][x] = ECellType::None;
+            m_gameManager->SetPowerTime();
         }
     }
     m_actorPoint[actorType].x = x;

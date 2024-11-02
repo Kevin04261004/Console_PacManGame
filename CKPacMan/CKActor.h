@@ -1,10 +1,11 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "GameManager.h"
 
 class CKActor
 {
 public:
-	CKActor(float x, float y);
+	CKActor(float x, float y, GameManager* gm);
 	virtual ~CKActor();
 
 	inline sf::Vector2f GetPosition() const { return m_sprite.getPosition(); }
@@ -16,5 +17,6 @@ public:
 protected:
 	sf::Sprite m_sprite;
 	sf::Vector2f m_position;
+	GameManager* m_gameManager;
 };
 

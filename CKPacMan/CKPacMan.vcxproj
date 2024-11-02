@@ -27,6 +27,7 @@
     <ClCompile Include="CKPathFinder.cpp" />
     <ClCompile Include="CKPlayer.cpp" />
     <ClCompile Include="EatenState.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HuntedState.cpp" />
     <ClCompile Include="HunterState.cpp" />
     <ClCompile Include="InBoxState.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="CKPlayer.h" />
     <ClInclude Include="CKSoundManager.h" />
     <ClInclude Include="EatenState.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="HuntedState.h" />
     <ClInclude Include="HunterState.h" />
     <ClInclude Include="InBoxState.h" />

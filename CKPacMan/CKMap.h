@@ -4,11 +4,12 @@
 #include "CellInfo.h"
 #include <map>
 #include "SFML/Audio.hpp"
+#include "GameManager.h"
 
 class CKMap
 {
 public:
-    CKMap(class CKSoundManager* SoundManager);
+    CKMap(class CKSoundManager* SoundManager, GameManager* gm);
 
     // 맵 파일 읽기
     bool LoadMapFromFile(const std::string& filename);
@@ -28,6 +29,8 @@ public:
 private:
     int m_width;
     int m_height;
+
+    GameManager* m_gameManager;
 
     std::vector<std::vector<ECellType>> m_mapData;
 

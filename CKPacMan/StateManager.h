@@ -16,14 +16,17 @@ class StateManager
 private:
 	std::map<EEnemyState, BaseState*> m_stateMap;
 
-	EEnemyState CurrentStateType;
+	EEnemyState m_CurrentStateType;
 
-	class CKEnemy* parentEnemy;
+	class CKEnemy* m_parentEnemy;
+	
+	GameManager* m_gameManager;
 public:
-	StateManager(EEnemyState initState, class CKActor* actor);
+	StateManager(EEnemyState initState, class CKActor* actor, GameManager* gm);
 	void ChangeState(EEnemyState state);
 	void UpdateState(float deltaTime);
 	EEnemyState GetCurrentStateType();
-	inline CKEnemy* GetOwner() { return parentEnemy; }
+	inline CKEnemy* GetOwner() { return m_parentEnemy; }
+	inline GameManager* GetGM() { return m_gameManager; }
 };
 

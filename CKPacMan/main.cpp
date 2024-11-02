@@ -8,9 +8,12 @@
 #include "InputHandler.h"
 #include <chrono>
 #include <vector>
+#include "GameManager.h"
 
 int main()
 {
+    GameManager gameManager;
+
     // 창 설정
     sf::RenderWindow window(sf::VideoMode(700, 700), "PacMan", sf::Style::Close);
 
@@ -30,7 +33,7 @@ int main()
     soundManager.SetSFXVolume(30.0f);
 
     // 맵 설정
-    CKMap map(&soundManager);
+    CKMap map(&soundManager, &gameManager);
     if (!map.LoadMapFromFile("Resource/Maps/CKGameMap.txt"))
     {
         return -1;
@@ -41,17 +44,17 @@ int main()
 
     // 플레이어 설정
     float moveSpeed = 0.15f;
-    CKPlayer player(&inputHandler, &map, moveSpeed);
+    CKPlayer player(&inputHandler, &map, moveSpeed, &gameManager);
     actors.push_back(&player);
 
     // 몬스터 설정
-    CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0);
+    CKEnemy enemy00(&map, moveSpeed, EActorType::Enemy0, &gameManager);
     actors.push_back(&enemy00);
-    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1);
+    CKEnemy enemy01(&map, moveSpeed, EActorType::Enemy1, &gameManager);
     actors.push_back(&enemy01);
-    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2);
+    CKEnemy enemy02(&map, moveSpeed, EActorType::Enemy2, &gameManager);
     actors.push_back(&enemy02);
-    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3);
+    CKEnemy enemy03(&map, moveSpeed, EActorType::Enemy3, &gameManager);
     actors.push_back(&enemy03);
 
 
@@ -67,7 +70,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
         // 시간 설정
         auto currentTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<float> elapsedTime = currentTime - previousTime;
@@ -76,6 +79,9 @@ int main()
 
         // 입력 처리
         inputHandler.HandleInput();
+
+        // 게임 메니저
+        gameManager.Update(deltaTime);
 
         // 플레이어 업데이트 (DeltaTime 사용)
         for (auto actor : actors)

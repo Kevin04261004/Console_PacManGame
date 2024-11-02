@@ -2,7 +2,7 @@
 #include "CKMap.h"
 #include "CKPathFinder.h"
 
-CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type) : CKCharacter(map->GetActorPoint(type).x* CellInfo::CELL_SIZE, map->GetActorPoint(type).y* CellInfo::CELL_SIZE),
+CKEnemy::CKEnemy(CKMap* map, float moveSpeed, EActorType type, GameManager* gm) : CKCharacter(map->GetActorPoint(type).x* CellInfo::CELL_SIZE, map->GetActorPoint(type).y* CellInfo::CELL_SIZE, gm),
 m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(1), NORMAL_FRAMES(6), m_animOver(false),
 m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
@@ -18,16 +18,16 @@ m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 	switch (m_enemyType)
 	{
 	case EActorType::Enemy0:
-		m_stateManager = new StateManager(EEnemyState::Hunter, this);
+		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
 		break;
 	case EActorType::Enemy1:
-		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
 		break;
 	case EActorType::Enemy2:
-		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
 		break;
 	case EActorType::Enemy3:
-		m_stateManager = new StateManager(EEnemyState::InBox, this);
+		m_stateManager = new StateManager(EEnemyState::Hunter, this, gm);
 		break;
 	default:
 		exit(1);
@@ -173,7 +173,7 @@ void CKEnemy::FindRandomPointAndPath()
 {
 	point startPoint(m_position.x / CellInfo::CELL_SIZE, m_position.y / CellInfo::CELL_SIZE);
 
-	m_pathFinder->FindRandomPath(startPoint.x, startPoint.y, m_path);
+	m_pathFinder->FindRandomPath(startPoint.x, startPoint.y, m_path, GetEnemyType());
 }
 
 void CKEnemy::SetNextDirection()
@@ -184,6 +184,7 @@ void CKEnemy::SetNextDirection()
 	}
 
 	m_direction = sf::Vector2f(0, 0);
+	
 	point nextPoint;
 	if (HasPath())
 	{
@@ -196,9 +197,50 @@ void CKEnemy::SetNextDirection()
 
 void CKEnemy::SetReverseNextDirection()
 {
-	if (!TrySetSamePointInPath())
+	SetNextDirection();
+
+	sf::Vector2f reverseDirection = -m_direction;
+	sf::Vector2f reversePos = m_position + reverseDirection;
+
+	// 반대 방향이 벽인지 확인
+	if (!m_map->IsWall(reversePos))
 	{
-		return;
+		m_direction = reverseDirection;
+	}
+	else
+	{
+		// 반대쪽이 벽인 경우, 양 옆 중 벽이 아닌 쪽을 선택
+		sf::Vector2f leftDirection, rightDirection;
+
+		// 현재 방향에 따라 양 옆 방향 설정
+		if (m_direction == sf::Vector2f(CellInfo::CELL_SIZE, 0) || m_direction == sf::Vector2f(-CellInfo::CELL_SIZE, 0)) // 좌우 이동 중일 때
+		{
+			leftDirection = sf::Vector2f(0, -CellInfo::CELL_SIZE);   // 위쪽
+			rightDirection = sf::Vector2f(0, CellInfo::CELL_SIZE);   // 아래쪽
+		}
+		else // 상하 이동 중일 때
+		{
+			leftDirection = sf::Vector2f(-CellInfo::CELL_SIZE, 0);   // 왼쪽
+			rightDirection = sf::Vector2f(CellInfo::CELL_SIZE, 0);   // 오른쪽
+		}
+
+		// 양 옆 방향 중 벽이 아닌 쪽을 m_direction으로 설정
+		sf::Vector2f leftPos = m_position + leftDirection;
+		sf::Vector2f rightPos = m_position + rightDirection;
+
+		if (!m_map->IsWall(leftPos))
+		{
+			m_direction = leftDirection;
+		}
+		else if (!m_map->IsWall(rightPos))
+		{
+			m_direction = rightDirection;
+		}
+		else
+		{
+			// 모든 방향이 벽일 경우 정지
+			m_direction = sf::Vector2f(0, 0);
+		}
 	}
 }
 
@@ -254,4 +296,9 @@ bool CKEnemy::HasPath()
 	{
 		return true;
 	}
+}
+
+bool CKEnemy::IsPlayerInRange(int range)
+{
+	return m_pathFinder->FindTarget(range, m_position, EActorType::Player);
 }

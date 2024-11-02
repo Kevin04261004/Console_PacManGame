@@ -164,9 +164,9 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
     return m_found;
 }
 
-bool CKPathFinder::FindRandomPath(int sx, int sy, std::stack<point>& outPath)
+bool CKPathFinder::FindRandomPath(int sx, int sy, std::stack<point>& outPath, int additionalSeed)
 {
-    std::srand(std::time(nullptr));
+    std::srand(std::time(nullptr) + additionalSeed);
 
     point target;
     while (true)
@@ -183,4 +183,18 @@ bool CKPathFinder::FindRandomPath(int sx, int sy, std::stack<point>& outPath)
     FindPath(sx, sy, target.x, target.y, outPath);
     
     return true;
+}
+
+bool CKPathFinder::FindTarget(int range, sf::Vector2f startPosition, EActorType targetType)
+{
+    sf::Vector2f targetPoint = m_map->GetActorPoint(targetType);
+    sf::Vector2f targetPosition(targetPoint.x * CellInfo::CELL_SIZE, targetPoint.y * CellInfo::CELL_SIZE);
+
+    // 타겟과 거리 계산
+    float distanceToTarget = std::sqrt(
+        std::pow(targetPosition.x - startPosition.x, 2) +
+        std::pow(targetPosition.y - startPosition.y, 2)
+    );
+
+    return range >= distanceToTarget;
 }

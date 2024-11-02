@@ -5,7 +5,7 @@
 class CKPlayer : public CKCharacter
 {
 public:
-	CKPlayer(InputHandler* inputHandler, class CKMap* map, float moveSpeed);
+	CKPlayer(InputHandler* inputHandler, class CKMap* map, float moveSpeed, GameManager* gm);
 	void InitializeSprites() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(sf::RenderWindow& window) override;

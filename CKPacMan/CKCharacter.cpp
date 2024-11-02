@@ -1,6 +1,6 @@
 #include "CKCharacter.h"
 
-CKCharacter::CKCharacter(float x, float y) : CKActor(x, y)
+CKCharacter::CKCharacter(float x, float y, GameManager* gm) : CKActor(x, y, gm)
 {
 	
 }

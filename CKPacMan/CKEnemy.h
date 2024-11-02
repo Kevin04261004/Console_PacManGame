@@ -7,7 +7,7 @@
 class CKEnemy : public CKCharacter
 {
 public:
-	CKEnemy(class CKMap* map, float moveSpeed, EActorType type);
+	CKEnemy(class CKMap* map, float moveSpeed, EActorType type, GameManager* gm);
 	virtual ~CKEnemy();
 
 	void InitializeSprites() override;
@@ -28,6 +28,9 @@ public:
 
 	void Move();
 	bool HasPath();
+
+	inline int GetEnemyType() { return (int)m_enemyType; }
+	bool IsPlayerInRange(int range);
 protected:
 	CKMap* m_map;
 	enum class EActorType m_enemyType;
@@ -50,7 +53,5 @@ protected:
 	sf::Vector2f m_direction;
 
 	StateManager* m_stateManager;
-
-	bool m_isWin;
 };
 

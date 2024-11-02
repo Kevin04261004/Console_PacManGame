@@ -5,32 +5,34 @@
 #include "InBoxState.h"
 #include "CKEnemy.h"
 
-StateManager::StateManager(EEnemyState initState, CKActor* parent)
+StateManager::StateManager(EEnemyState initState, CKActor* parent, GameManager* gm)
 {
 	m_stateMap.insert({ EEnemyState::Hunter, new HunterState(this) });
 	m_stateMap.insert({ EEnemyState::Hunted, new HuntedState(this) });
 	m_stateMap.insert({ EEnemyState::InBox, new InBoxState(this) });
 	m_stateMap.insert({ EEnemyState::Eaten, new EatenState(this) });
 
-	parentEnemy = static_cast<CKEnemy*>(parent);
+	m_parentEnemy = static_cast<CKEnemy*>(parent);
 
-	CurrentStateType = initState;
-	m_stateMap[CurrentStateType]->Enter();
+	m_CurrentStateType = initState;
+	m_stateMap[m_CurrentStateType]->Enter();
+
+	m_gameManager = gm;
 }
 
 void StateManager::UpdateState(float deltaTime)
 {
-	m_stateMap[CurrentStateType]->Excute(deltaTime);
+	m_stateMap[m_CurrentStateType]->Excute(deltaTime);
 }
 
 EEnemyState StateManager::GetCurrentStateType()
 {
-	return CurrentStateType;
+	return m_CurrentStateType;
 }
 
 void StateManager::ChangeState(EEnemyState state)
 {
-	m_stateMap[CurrentStateType]->Exit();
-	CurrentStateType = state;
-	m_stateMap[CurrentStateType]->Enter();
+	m_stateMap[m_CurrentStateType]->Exit();
+	m_CurrentStateType = state;
+	m_stateMap[m_CurrentStateType]->Enter();
 }

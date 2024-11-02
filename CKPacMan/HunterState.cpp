@@ -3,34 +3,38 @@
 
 void HunterState::Enter()
 {
+	bIsTargetFound = true;
+	timer = 0.0f;
 }
 
 void HunterState::Excute(float deltaTime)
 {
-	huntingTimer += deltaTime;
+	timer += deltaTime;
+	
+	bIsTargetFound = stateManager->GetOwner()->IsPlayerInRange(100);
 
-	if (huntingTimer > huntingTime)
+	if (!bIsTargetFound && timer > chasingTime)
 	{
-		huntingTimer = 0.0f;
-		if (!bIsTargetFound)
+		timer = 0.0f;
+		if (!stateManager->GetOwner()->HasPath())
 		{
-			// TODO: 랜덤한 point를 잡아서 FindPath();
-			if (!stateManager->GetOwner()->HasPath())
-			{
-				stateManager->GetOwner()->FindRandomPointAndPath();
-			}
-			stateManager->GetOwner()->SetNextDirection();
-			stateManager->GetOwner()->Move();
-
-			// TODO: target이 범위 내에 있는지 찾기.
-
+			stateManager->GetOwner()->FindRandomPointAndPath();
 		}
-		else
-		{
-			stateManager->GetOwner()->FindPath(EActorType::Player);
-			stateManager->GetOwner()->SetNextDirection();
-			stateManager->GetOwner()->Move();
-		}
+		stateManager->GetOwner()->SetNextDirection();
+		stateManager->GetOwner()->Move();
+	}
+	
+	if (bIsTargetFound && timer > huntingTime)
+	{
+		timer = 0.0f;
+		stateManager->GetOwner()->FindPath(EActorType::Player);
+		stateManager->GetOwner()->SetNextDirection();
+		stateManager->GetOwner()->Move();
+	}
+
+	if (stateManager->GetGM()->IsPowerTime())
+	{
+		stateManager->ChangeState(EEnemyState::Hunted);
 	}
 }
 

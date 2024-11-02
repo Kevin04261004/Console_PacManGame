@@ -4,7 +4,7 @@
 class CKCharacter : public CKActor
 {
 public:
-	CKCharacter(float x, float y);
+	CKCharacter(float x, float y, GameManager* gm);
 	virtual ~CKCharacter();
 	virtual void Dead();
 protected:
