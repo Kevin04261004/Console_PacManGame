@@ -15,7 +15,7 @@ public:
 	CKSoundManager();
 	virtual ~CKSoundManager();
 
-	void PlayBGM(const sf::SoundBuffer& InBGM);
+	void PlayBGM(const sf::SoundBuffer& InBGM, bool isLoop = true);
 	void PlaySFXOneShoot(const sf::SoundBuffer& InSFX);
 	void SetBGMVolume(float volume);
 	void SetSFXVolume(float volume);

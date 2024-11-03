@@ -45,6 +45,10 @@ void CKPlayer::InitializeSprites()
 
 void CKPlayer::Update(float deltaTime)
 {
+	if (!m_gameManager->IsInGame())
+	{
+		return;
+	}
 	m_animTimer += deltaTime;
 	if (m_animTimer > (m_isDead ? DEATH_FRAMES : NORMAL_FRAMES) * m_animSpeed)
 	{

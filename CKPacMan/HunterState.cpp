@@ -3,8 +3,9 @@
 
 void HunterState::Enter()
 {
-	bIsTargetFound = true;
+	bIsTargetFound = false;
 	timer = 0.0f;
+	stateManager->GetOwner()->FindRandomPointAndPath();
 }
 
 void HunterState::Excute(float deltaTime)

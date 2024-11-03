@@ -206,5 +206,11 @@
     <Media Include="Resource\Sounds\start.wav">
       <Filter>Resource Files\Sounds</Filter>
     </Media>
+    <Media Include="Resource\Sounds\died.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\victory.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

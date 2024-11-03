@@ -67,6 +67,7 @@
     <Image Include="Resource\Images\PacmanDeath16.png" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Resource\Sounds\died.mp3" />
     <Media Include="Resource\Sounds\eat_dot_0.wav" />
     <Media Include="Resource\Sounds\eat_dot_1.wav" />
     <Media Include="Resource\Sounds\eyes.wav" />
@@ -85,6 +86,7 @@
     <Media Include="Resource\Sounds\siren4.wav" />
     <Media Include="Resource\Sounds\siren4_firstloop.wav" />
     <Media Include="Resource\Sounds\start.wav" />
+    <Media Include="Resource\Sounds\victory.mp3" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -54,6 +54,11 @@ void CKEnemy::InitializeSprites()
 
 void CKEnemy::Update(float deltaTime)
 {
+	if (!m_gameManager->IsInGame())
+	{
+		return;
+	}
+
 	m_stateManager->UpdateState(deltaTime);
 
 	m_animTimer += deltaTime;

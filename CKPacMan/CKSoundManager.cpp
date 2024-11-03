@@ -17,7 +17,7 @@ CKSoundManager::~CKSoundManager()
 	}
 }
 
-void CKSoundManager::PlayBGM(const sf::SoundBuffer& InBGM)
+void CKSoundManager::PlayBGM(const sf::SoundBuffer& InBGM, bool isLoop)
 {
 	if (m_activatedBGM != nullptr && m_activatedBGM->Playing)
 	{
@@ -25,7 +25,7 @@ void CKSoundManager::PlayBGM(const sf::SoundBuffer& InBGM)
 	}
 	m_activatedBGM = std::make_unique<sf::Sound>();
 	m_activatedBGM->setBuffer(InBGM);
-	m_activatedBGM->setLoop(true);
+	m_activatedBGM->setLoop(isLoop);
 	m_activatedBGM->setVolume(m_BGMVolume);
 	m_activatedBGM->play();
 }
