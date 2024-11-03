@@ -121,36 +121,6 @@ bool CKPathFinder::FindPath(int sx, int sy, int tx, int ty, std::stack<point>& o
         outPath.pop();
     }
 
-   /* system("cls");
-    for (int y = 0; y < m_mapHeight; ++y)
-    {
-        for (int x = 0; x < m_mapWidth; ++x)
-        {
-            std::cout << (int)(m_map->getMapData(x, y) == ECellType::Wall);
-        }
-        std::cout << std::endl;
-    }
-
-    system("cls");
-    for (int y = 0; y < m_mapHeight; ++y)
-    {
-        for (int x = 0; x < m_mapWidth; ++x)
-        {
-            std::cout << m_mapData[y][x] << '\t';
-        }
-        std::cout << std::endl;
-    }
-
-    system("cls");
-    for (int y = 0; y < m_mapHeight; ++y)
-    {
-        for (int x = 0; x < m_mapWidth; ++x)
-        {
-            std::cout << m_parent[y][x].x << ',' << m_parent[y][x].y << '\t';
-        }
-        std::cout << std::endl;
-    }*/
-
     if (m_found) {
         point p;
         p = { tx, ty };

@@ -19,21 +19,14 @@ public:
 	bool FindPath(EActorType targetType);
 	bool FindPath(point targetPoint);
 	void FindRandomPointAndPath();
-
 	void SetNextDirection();
-
 	void SetReverseNextDirection();
-
 	bool TrySetSamePointInPath();
-
 	void Move();
 	bool HasPath();
-
 	inline int GetEnemyType() { return (int)m_enemyType; }
 	bool IsPlayerInRange(int range);
-
 	void PlayerCollisionEnter();
-
 	inline CKSoundManager* GetSoundManager() { return m_soundManager; }
 
 protected:

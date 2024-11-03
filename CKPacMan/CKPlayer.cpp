@@ -4,7 +4,7 @@
 #include "CKMap.h"
 
 CKPlayer::CKPlayer(InputHandler* inputHandler, CKMap* map, float moveSpeed, GameManager* gm) : CKCharacter(map->GetActorPoint(EActorType::Player).x * CellInfo::CELL_SIZE, map->GetActorPoint(EActorType::Player).y * CellInfo::CELL_SIZE, gm),
-m_animSpeed(0.1f), m_animTimer(0.0f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
+m_animSpeed(0.1f), DEATH_FRAMES(12), NORMAL_FRAMES(6), m_animOver(false), m_direction(sf::Vector2f(0, 0)), m_map(map), m_moveSpeed(moveSpeed)
 {
 	InitializeSprites();
 	m_inputHandler = inputHandler;
@@ -52,7 +52,7 @@ void CKPlayer::Update(float deltaTime)
 	m_animTimer += deltaTime;
 	if (m_animTimer > (m_isDead ? DEATH_FRAMES : NORMAL_FRAMES) * m_animSpeed)
 	{
-		if (m_isDead || m_isWin)
+		if (m_isDead)
 		{
 			m_animOver = true;
 		}
@@ -104,7 +104,7 @@ void CKPlayer::Draw(sf::RenderWindow& window)
 	{
 		yPos = 3;
 	}
-	else if (m_isDead || m_isWin)
+	else if (m_isDead)
 	{
 		yPos = 0;
 	}
@@ -124,7 +124,6 @@ void CKPlayer::Dead()
 
 void CKPlayer::Win()
 {
-	m_isWin = true;
 	m_animTimer = 0.0f;
 	m_sprite.setTexture(m_textureDeath);
 }
@@ -137,6 +136,5 @@ void CKPlayer::Reset()
 	m_direction = sf::Vector2f(0, 0);
 	
 	m_animTimer = 0;
-	m_energizerTimer = 0;
 	m_sprite.setTexture(m_textureNormal);
 }

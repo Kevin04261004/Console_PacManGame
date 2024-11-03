@@ -23,14 +23,11 @@ protected:
 	float m_animSpeed;
 	float m_moveSpeed;
 	float m_animTimer;
-	float m_energizerTimer;
 	float m_moveTimer;
 	const int DEATH_FRAMES;
 	const int NORMAL_FRAMES;
 	bool m_animOver;
 	
 	sf::Vector2f m_direction;
-
-	bool m_isWin;
 };
 
